@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Context>
+	<Resource
+		name="jdbc/mysql1"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://45.119.146.159:3306/traffickers?useSSL=false"
+		username="root"
+		password="rhdahwkemfdb^^"
+		maxTotal="20"
+		maxWaitMillis="5000" />
+</Context>

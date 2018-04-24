@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="./css/login.css">
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#myModal").modal("show");
+});
+</script>
+
+</head>
+<body>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<form action="./admin_login_ok.tk" method="post">
+				<div class="modal-header">				
+					<h4 class="modal-title">Admin Login</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">				
+					<div class="form-group">
+						<label>Administrator ID</label>
+						<input type="text" name="admin_id" class="form-control" required="required">
+					</div>
+					<div class="form-group">
+						<div class="clearfix">
+							<label>Password</label>							
+						</div>
+						
+						<input type="password" name="admin_pwd" class="form-control" required="required">
+					</div>
+				</div>
+				<div class="modal-footer">					
+					<input type="submit" class="btn btn-primary pull-right" value="Login">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>     
+</body>
+</html>                                		
