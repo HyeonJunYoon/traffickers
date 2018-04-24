@@ -27,7 +27,7 @@ import model2.ConcertWriteAction;
 import model2.ConcertWriteOkAction;
 import model2.ConcertListAction;
 
-import model2.LoginCheckApp;
+import model2.App_LoginCheck;
 
 /**
  * Servlet implementation class URIController

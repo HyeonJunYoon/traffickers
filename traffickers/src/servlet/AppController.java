@@ -14,7 +14,8 @@ import org.json.simple.JSONObject;
 
 import model1.MemberTO;
 import model2.AppAction;
-import model2.LoginCheckApp;
+import model2.App_LoginCheck;
+import model2.App_IndieWrite;
 
 /**
  * Servlet implementation class AppController
@@ -53,10 +54,15 @@ public class AppController<JSONarray> extends HttpServlet {
 				AppAction action = null;
 				
 				if(path.equals("/*.app") || path.equals("/login_check.app")) {
-					action = new LoginCheckApp();												
+					action = new App_LoginCheck();												
 					action.execute(request, response);
 					
 					url = "/board/model2/app_login_check.jsp";
+				}else if(path.equals("/indie_write.app")) {
+					action = new App_IndieWrite();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_indieWriteOk.jsp";
 				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(url);

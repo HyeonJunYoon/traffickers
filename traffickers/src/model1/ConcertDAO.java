@@ -39,7 +39,7 @@ public class ConcertDAO {
 			
 		try {
 			conn = dataSource.getConnection();
-			String sql = "insert into tr_concert values(0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  now())";
+			String sql = "insert into tr_concert values(0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  now())";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,  to.getCtype());
@@ -52,12 +52,47 @@ public class ConcertDAO {
 			pstmt.setString(8, to.getPosterData());
 			pstmt.setLong(9, to.getPosterSize());
 			pstmt.setString(10, to.getCtime());
-			pstmt.setString(11, to.getCprice());
-			pstmt.setString(12,  to.getCplace());
-			pstmt.setString(13,  to.getClink());
-			pstmt.setString(14,  to.getCurl());
-			pstmt.setString(15,  to.getCetc());		
+			pstmt.setString(11, to.getcDate());
+			pstmt.setString(12, to.getCprice());
+			pstmt.setString(13,  to.getCplace());
+			pstmt.setString(14,  to.getClink());
+			pstmt.setString(15,  to.getCurl());
+			pstmt.setString(16,  to.getCetc());		
 			
+			int result = pstmt.executeUpdate();
+						
+			if(result == 1) {
+				flag = 0;
+			}
+		} catch(SQLException e) {
+			System.out.println("[sql 에러] : "+ e.getMessage());
+		}finally {
+			if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();}catch(SQLException e) {}
+		}
+		   return flag;		
+	}
+	
+	// app에서 인디 등록
+	public int App_indieWriteOk(ConcertTO cto) {
+		
+		int flag = 1;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "insert into tr_concert values(0, 1, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  now())";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cto.getMem_idx());
+			pstmt.setString(2, cto.getSubject());
+			pstmt.setString(3, cto.getContents());
+			pstmt.setString(4, cto.getPosterName());
+			pstmt.setString(5, cto.getPosterData());
+			pstmt.setLong(6, cto.getPosterSize());
+			pstmt.setString(7, cto.getCtime());
+			pstmt.setString(8, cto.getcDate());
+			pstmt.setString(9, cto.getCprice());
+			pstmt.setString(10,  cto.getCplace());			
 			int result = pstmt.executeUpdate();
 						
 			if(result == 1) {
@@ -92,6 +127,7 @@ public class ConcertDAO {
 		    		+ "c.fileName, "
 		    		+ "c.dataName, "
 		    		+ "c.ctime, "
+		    		+ "c.cDate, "		    		
 		    		+ "c.cprice, "
 		    		+ "c.cplace, "
 		    		+ "c.wdate "
@@ -122,6 +158,7 @@ public class ConcertDAO {
 		    	cto.setPosterName(rs.getString("fileName"));
 		    	cto.setPosterData(rs.getString("dataName"));
 		    	cto.setCtime(rs.getString("ctime"));
+		    	cto.setcDate(rs.getString("cDate"));
 		    	cto.setCprice(rs.getString("cprice"));
 		    	cto.setCplace(rs.getString("cplace"));
 		    	cto.setWdate(rs.getString("wdate"));

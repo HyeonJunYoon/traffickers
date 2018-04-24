@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import model1.MemberDAO;
 import model1.MemberTO;
 
-public class LoginCheckApp implements AppAction {
+public class App_LoginCheck implements AppAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {

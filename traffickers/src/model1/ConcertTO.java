@@ -10,6 +10,7 @@ public class ConcertTO {
 	private String subject;			// 제목
 	private String contents;		// 내용
 	private String ctime;			// 공연시간
+	private String cDate;			// 공연날짜
 	private String cprice;			// 금액
 	private String cplace;			// 장소
 	private String clink;				// 공연 홈페이지
@@ -73,6 +74,12 @@ public class ConcertTO {
 	}
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
+	}	
+	public String getcDate() {
+		return cDate;
+	}
+	public void setcDate(String cDate) {
+		this.cDate = cDate;
 	}
 	public String getCprice() {
 		return cprice;
