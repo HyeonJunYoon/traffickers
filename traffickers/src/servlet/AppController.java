@@ -16,6 +16,7 @@ import model1.MemberTO;
 import model2.AppAction;
 import model2.App_LoginCheck;
 import model2.App_IndieWrite;
+import model2.App_MemberJoin;
 
 /**
  * Servlet implementation class AppController
@@ -53,16 +54,26 @@ public class AppController<JSONarray> extends HttpServlet {
 				String url = "";
 				AppAction action = null;
 				
+				// 로그인체크
 				if(path.equals("/*.app") || path.equals("/login_check.app")) {
-					action = new App_LoginCheck();												
+					action = new App_LoginCheck();
 					action.execute(request, response);
 					
 					url = "/board/model2/app_login_check.jsp";
+					
+				// 공연등록 - 인디
 				}else if(path.equals("/indie_write.app")) {
 					action = new App_IndieWrite();
 					action.execute(request, response);
 					
 					url = "/board/model2/app_indieWriteOk.jsp";
+					
+				// 회원가입
+				}else if(path.equals("/member_join.app")) {
+					action = new App_MemberJoin();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_MemberJoinOk.jsp";
 				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(url);

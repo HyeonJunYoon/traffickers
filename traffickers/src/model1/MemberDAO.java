@@ -87,5 +87,39 @@ public class MemberDAO {
 	    }
 		return to;		
 	}
+
 	
+	public int MemberJoin(MemberTO to) {
+		
+		int flag = 0;
+		
+	    try{
+		    conn = dataSource.getConnection();
+		    	    
+		    String sql = "insert into tr_member values (0, ?, PASSWORD(?), ?, ?, ?, ?, now(), 0)";
+		    
+		    pstmt = conn.prepareStatement(sql);
+		   
+		    pstmt.setString(1, to.getUserID());
+		    pstmt.setString(2, to.getUserPWD());
+		    pstmt.setString(3, to.getNickName());
+		    pstmt.setString(4, to.getBirth());
+		    pstmt.setInt(5, to.getSex());
+		    pstmt.setInt(6,  to.getJoinType());
+		    	   
+		    int result = pstmt.executeUpdate();
+			   
+			   if(result == 1){
+				   flag = 1;
+			   }
+			   
+			} catch(SQLException e) {
+				System.out.println("[에러] : "+ e.getMessage());
+			}finally {
+				if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try{conn.close();}catch(SQLException e) {}
+			}
+	    
+		   return flag;
+		}
 }

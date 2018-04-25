@@ -9,7 +9,7 @@ public class MemberTO {
 	private String UserID;
 	private String UserPWD;
 	private String NickName;
-	private int Birth;
+	private String Birth;
 	private int Sex;
 	private int JoinType;
 	private int JoinDate;
@@ -58,10 +58,10 @@ public class MemberTO {
 	public void setNickName(String nickName) {
 		NickName = nickName;
 	}
-	public int getBirth() {
+	public String getBirth() {
 		return Birth;
 	}
-	public void setBirth(int birth) {
+	public void setBirth(String birth) {
 		Birth = birth;
 	}
 	public int getSex() {
