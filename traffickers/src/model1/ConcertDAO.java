@@ -76,11 +76,11 @@ public class ConcertDAO {
 	// app에서 인디 등록
 	public int App_indieWriteOk(ConcertTO cto) {
 		
-		int flag = 1;
+		int flag = 0;
 		
 		try {
 			conn = dataSource.getConnection();
-			String sql = "insert into tr_concert values(0, 1, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  now())";
+			String sql = "insert into tr_concert values(0, 1, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', '', '',  now())";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cto.getMem_idx());
@@ -92,11 +92,11 @@ public class ConcertDAO {
 			pstmt.setString(7, cto.getCtime());
 			pstmt.setString(8, cto.getcDate());
 			pstmt.setString(9, cto.getCprice());
-			pstmt.setString(10,  cto.getCplace());			
+			pstmt.setString(10,  cto.getCplace());
 			int result = pstmt.executeUpdate();
 						
 			if(result == 1) {
-				flag = 0;
+				flag = 1;
 			}
 		} catch(SQLException e) {
 			System.out.println("[sql 에러] : "+ e.getMessage());

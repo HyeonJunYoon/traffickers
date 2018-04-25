@@ -21,16 +21,14 @@ public class App_IndieWrite implements AppAction {
 				
 		ConcertTO cto = new ConcertTO();
 		
-		String uploardpath = "C:/02.Language/03.JSP/01.eclipse-workspace/traffickers/WebContent/upload/";
+		String uploardpath = "C:/02.Language/06.git/traffickers/traffickers/WebContent/upload/";
 		int maxFileSize = 1024 * 1024 * 2; // 2mb 를 풀어서
 		String encoding = "utf-8";
-		
+			
 		try {
 			MultipartRequest multi = 
 					new MultipartRequest(request, uploardpath, maxFileSize, encoding, new DefaultFileRenamePolicy());
-			
-			System.out.println(multi.getParameter("subject"));
-			
+								
 			cto.setMem_idx(Integer.parseInt(multi.getParameter("mem_idx")));
 			cto.setSubject(multi.getParameter("subject"));
 			cto.setCtime(multi.getParameter("ctime"));
@@ -45,12 +43,10 @@ public class App_IndieWrite implements AppAction {
 			File file = multi.getFile("filename");
 				
 			cto.setPosterSize(file.length());
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			System.out.println("[에러] : " + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("[에러] : " + e.getMessage());
-		}
-   		  		
+		}   		
+		
 		ConcertDAO dao = new ConcertDAO();
    		
    		int flag = dao.App_indieWriteOk(cto);
