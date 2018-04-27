@@ -60,7 +60,7 @@ public class MemberDAO {
 	    try{
 		    conn = dataSource.getConnection();
 		    
-		    String sql = "select idx, id from tr_member where id=? and pwd=PASSWORD(?)";
+		    String sql = "select idx, id, nickName, ctype from tr_member where id=? and pwd=PASSWORD(?)";
 		    
 		    pstmt = conn.prepareStatement(sql);
 		   
@@ -70,10 +70,12 @@ public class MemberDAO {
 		    rs = pstmt.executeQuery();
 			   
 		    if(rs.next()){
-		    	System.out.println("idx : " + rs.getInt("idx") + "/ id : "+ rs.getString("id"));
+		    	System.out.println("[로그인 확인] :  idx : " + rs.getInt("idx") + " / id : "+ rs.getString("id")+ " / nickName : "+ rs.getString("nickName")+ " / ctype : "+ rs.getString("ctype"));
 		    	to.setFlag(1);
 		    	to.setUserIdx(rs.getInt("idx"));
 		    	to.setUserID(rs.getString("id"));
+		    	to.setNickName(rs.getString("nickName"));
+		    	to.setJoinType(rs.getInt("ctype"));
 		    }else {
 		    	to.setFlag(0);
 		    }
@@ -87,11 +89,10 @@ public class MemberDAO {
 	    }
 		return to;		
 	}
-
 	
 	public int MemberJoin(MemberTO to) {
 		
-		int flag = 0;
+		int flag = 0;		
 		
 	    try{
 		    conn = dataSource.getConnection();
@@ -100,11 +101,14 @@ public class MemberDAO {
 		    
 		    pstmt = conn.prepareStatement(sql);
 		   
+		    String birth 	= to.getBirth() != "" ? to.getBirth() : "1999-01-01";
+		    int sex 	= Integer.toString(to.getSex()) != "" ? to.getSex() : 1;
+		    
 		    pstmt.setString(1, to.getUserID());
 		    pstmt.setString(2, to.getUserPWD());
 		    pstmt.setString(3, to.getNickName());
-		    pstmt.setString(4, to.getBirth());
-		    pstmt.setInt(5, to.getSex());
+		    pstmt.setString(4, birth);
+		    pstmt.setInt(5, sex);
 		    pstmt.setInt(6,  to.getJoinType());
 		    	   
 		    int result = pstmt.executeUpdate();
@@ -113,7 +117,7 @@ public class MemberDAO {
 				   flag = 1;
 			   }
 			   
-			} catch(SQLException e) {
+			} catch(Exception e) {
 				System.out.println("[에러] : "+ e.getMessage());
 			}finally {
 				if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
@@ -122,4 +126,40 @@ public class MemberDAO {
 	    
 		   return flag;
 		}
+	
+	public int IdenticalCheck(MemberTO mto) {
+		
+		int result = 11;
+		
+		String icType = mto.getIcType() > 1 ? "id" : "nickName";
+			
+		try {
+			conn = dataSource.getConnection();
+			
+			String sql = "select count(*) as checkNum from tr_member where "+ icType +" = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mto.getIcValue());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt("checkNum");
+			}
+		} catch (SQLException e) {
+			System.out.println("[에러] : " + e.getMessage());
+		} finally {
+	    	if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();}catch(SQLException e) {}
+		}
+		
+		int flagNum;
+		if(mto.getIcType() == 1) {
+			flagNum = result == 1 ? 5 : result == 0 ? 4 : result;			
+		}else {
+			flagNum = result == 1 ? 3 : result == 0 ? 2 : result;
+		}
+		
+		return flagNum;
+	}
 }

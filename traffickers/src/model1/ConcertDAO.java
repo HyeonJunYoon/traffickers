@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -183,4 +184,48 @@ public class ConcertDAO {
 		return listTO;
 	}
 	
+	
+	public ConcertTO AppListView(ConcertTO to) {		
+		
+		Calendar now = Calendar.getInstance();
+		
+		int atype = to.getList_Type();
+		String aValue = to.getList_Value();
+		String sql = "select subject, cPlace, cTime, fileName, dataName from tr_concert where";
+		String searchDate="";
+		
+		// 1 - 통합검색 / 2 - 날짜검색 / 3 - 장르검색 / 4 - 지역검색		
+		if(atype == 2) {
+			searchDate = now.get(Calendar.YEAR) +"-"+ aValue+"%";
+			sql += " cDate like '" +searchDate+ "'"; 
+		}else if(atype == 3) {
+			sql += " cType = '" + aValue +"'" ;			
+		}else if(atype == 4) {
+			sql += " cPlace like '"+aValue+"'";			
+		}else {
+			sql += " subject like '"+aValue+"'";
+		}
+			
+		try {
+			conn = dataSource.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);	    
+			rs = pstmt.executeQuery();
+			
+			ArrayList<ConcertTO> lists = new ArrayList();
+			while(rs.next()) {
+				ConcertTO cto = new ConcertTO();
+				cto.setCidx(rs.getInt("idx"));	    	
+				lists.add(cto);
+			}
+			to.setConcertlists(lists);
+		} catch (SQLException e) {
+			System.out.println("[SQL 에러] : " + e.getMessage());
+		} finally{
+			if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();} catch(SQLException e) {}
+	    }
+		
+		return to;	    
+	}
 }

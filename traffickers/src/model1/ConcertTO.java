@@ -1,5 +1,7 @@
 package model1;
 
+import java.util.ArrayList;
+
 public class ConcertTO {
 	private int cidx;					// 콘서트 고유값
 	private int ctype;				// 콘서트 - 0, 인디 - 1
@@ -19,7 +21,11 @@ public class ConcertTO {
 	private String posterName;	// 포스트 이미지 네임
 	private String posterData;	// 포스트 이미지 변경 파일네임
 	private long posterSize;		// 포스트 이미지 사이즈
-	private String wdate;			// 등록시간
+	private String wdate;			// 등록시간	
+	private int list_Type;			// [검색] 검색타입 (1 : 통합검색 / 2 : 날짜검색 / 3 : 장르검색 / 4 : 지역검색) 
+	private String list_Value;		// [검색] 검색어
+	
+	private ArrayList<ConcertTO> concertlists;
 		
 	public int getCidx() {
 		return cidx;
@@ -135,4 +141,22 @@ public class ConcertTO {
 	public void setWdate(String wdate) {
 		this.wdate = wdate;
 	}
+	public int getList_Type() {
+		return list_Type;
+	}
+	public void setList_Type(int list_Type) {
+		this.list_Type = list_Type;
+	}
+	public String getList_Value() {
+		return list_Value;
+	}
+	public void setList_Value(String list_Value) {
+		this.list_Value = list_Value;
+	}
+	public ArrayList<ConcertTO> getConcertlists() {
+		return concertlists;
+	}
+	public void setConcertlists(ArrayList<ConcertTO> concertlists) {
+		this.concertlists = concertlists;
+	}	
 }

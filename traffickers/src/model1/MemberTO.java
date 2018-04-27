@@ -2,19 +2,21 @@ package model1;
 
 public class MemberTO {
 
-	private int userIdx;
-	private String AdminID;
-	private String AdminPWD;
-	private int AdminLevel;
-	private String UserID;
-	private String UserPWD;
-	private String NickName;
-	private String Birth;
-	private int Sex;
-	private int JoinType;
-	private int JoinDate;
-	private int Status;	
-	private int flag;	
+	private int userIdx;				// User 고유값
+	private String AdminID;		// 관리자 아이디
+	private String AdminPWD;		// 관리자 패스워드
+	private int AdminLevel;		// 관리자 등급
+	private String UserID;			// 회원아이디
+	private String UserPWD;		// 회원패스워드
+	private String NickName;		// 닉네임
+	private String Birth;				// 생일자
+	private int Sex;					// 성별
+	private int JoinType;			// 회원가입 유형 - 일반 : 0 / kakao : 1/ facebook : 2
+	private int JoinDate;			// 회원가입날짜
+	private int Status;				// 상태 - 정상 : 0 / 차단 - 1
+	private int flag;					// 리턴값
+	private int icType;				// 중복체크 타입 - 닉네임 : 1 / 아이디 : 2
+	private String icValue;			// 중복체크 대상값
 	
 	public int getUserIdx() {
 		return userIdx;
@@ -93,5 +95,18 @@ public class MemberTO {
 	}
 	public void setFlag(int flag) {
 		this.flag = flag;
-	}	
+	}
+	public int getIcType() {
+		return icType;
+	}
+	public void setIcType(int icType) {
+		this.icType = icType;
+	}
+	public String getIcValue() {
+		return icValue;
+	}
+	public void setIcValue(String icValue) {
+		this.icValue = icValue;
+	}
+	
 }

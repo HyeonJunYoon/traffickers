@@ -17,6 +17,8 @@ import model2.AppAction;
 import model2.App_LoginCheck;
 import model2.App_IndieWrite;
 import model2.App_MemberJoin;
+import model2.App_IdenticalCheck;
+import model2.App_ListView;
 
 /**
  * Servlet implementation class AppController
@@ -74,6 +76,20 @@ public class AppController<JSONarray> extends HttpServlet {
 					action.execute(request, response);
 					
 					url = "/board/model2/app_MemberJoinOk.jsp";
+				
+				// 중복값 확인
+				}else if(path.equals("/identical_check.app")) {
+					action = new App_IdenticalCheck();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_identicalOk.jsp";
+					
+				// 리스트뷰 
+				}else if(path.equals("/listView.app")) {
+					action = new App_ListView();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_listView.jsp";
 				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(url);

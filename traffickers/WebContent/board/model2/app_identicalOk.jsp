@@ -9,7 +9,7 @@
 	request.setCharacterEncoding("utf-8");
 	  
 	int flag = (Integer)request.getAttribute("flag");
-	
+		
 	JSONObject jsonObj		= new JSONObject();
 	JSONArray jArray 			= new JSONArray();
 

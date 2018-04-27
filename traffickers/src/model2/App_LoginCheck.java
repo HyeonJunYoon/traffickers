@@ -1,5 +1,7 @@
 package model2;
 
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,8 +16,8 @@ public class App_LoginCheck implements AppAction {
 		//System.out.println("LoginCheckApp 확인");
 				
 		MemberTO to = new MemberTO();
-			to.setUserID(request.getParameter("id"));
-			to.setUserPWD(request.getParameter("pwd"));
+			to.setUserID(request.getParameter("id") == null ? "" : URLDecoder.decode(request.getParameter("id")));
+			to.setUserPWD(request.getParameter("pwd") == null ? "" : URLDecoder.decode(request.getParameter("pwd")));
 			
 			//System.out.println("id : " + request.getParameter("id") + " / pwd : " + request.getParameter("pwd"));
 					

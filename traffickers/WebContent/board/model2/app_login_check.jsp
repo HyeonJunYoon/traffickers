@@ -24,6 +24,8 @@
 	HashMap<String, String> map2 = new HashMap<String, String>();
 	map2.put("UserID", to.getUserID());
 	map2.put("UserIdx", String.valueOf(to.getUserIdx()));
+	map2.put("nickName", to.getNickName());
+	map2.put("cType", Integer.toString(to.getJoinType()));	
 	jArray.add(0, map2);
 	
 	jsonObj.put("return", jArray);
