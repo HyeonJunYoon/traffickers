@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<form method="post" action="http://192.168.0.12/traffickers/indie_write.app" enctype="multipart/form-data">
+<form method="post" action="http://192.168.0.18/traffickers/indie_write.app" enctype="multipart/form-data">
 <input type="text" name="mem_idx" value="1">
 <input type="text" name="subject" value="나의 PS 파트너">
 <input type="text" name="ctime" value="90분">

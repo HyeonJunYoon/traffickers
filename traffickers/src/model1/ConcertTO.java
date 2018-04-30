@@ -24,6 +24,7 @@ public class ConcertTO {
 	private String wdate;			// 등록시간	
 	private int list_Type;			// [검색] 검색타입 (1 : 통합검색 / 2 : 날짜검색 / 3 : 장르검색 / 4 : 지역검색) 
 	private String list_Value;		// [검색] 검색어
+	private int cFlag;					// 리턴값
 	
 	private ArrayList<ConcertTO> concertlists;
 		
@@ -158,5 +159,11 @@ public class ConcertTO {
 	}
 	public void setConcertlists(ArrayList<ConcertTO> concertlists) {
 		this.concertlists = concertlists;
-	}	
+	}
+	public int getcFlag() {
+		return cFlag;
+	}
+	public void setcFlag(int cFlag) {
+		this.cFlag = cFlag;
+	}
 }
