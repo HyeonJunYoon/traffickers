@@ -81,23 +81,29 @@ public class ConcertDAO {
 		
 		try {
 			conn = dataSource.getConnection();
-			String sql = "insert into tr_concert values(0, 1, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', '', '',  now())";
+			String sql = "insert into tr_concert values(0, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', ?,  now())";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cto.getMem_idx());
-			pstmt.setString(2, cto.getSubject());
-			pstmt.setString(3, cto.getContents());
-			pstmt.setString(4, cto.getPosterName());
-			pstmt.setString(5, cto.getPosterData());
-			pstmt.setLong(6, cto.getPosterSize());
-			pstmt.setString(7, cto.getCtime());
-			pstmt.setString(8, cto.getcDate());
-			pstmt.setString(9, cto.getCprice());
-			pstmt.setString(10,  cto.getCplace());
+			pstmt.setInt(1, cto.getCtype());
+			pstmt.setInt(2, cto.getMem_idx());
+			pstmt.setString(3, cto.getSubject());
+			pstmt.setString(4, cto.getContents());
+			pstmt.setString(5, cto.getPosterName());
+			pstmt.setString(6, cto.getPosterData());
+			pstmt.setLong(7, cto.getPosterSize());
+			pstmt.setString(8, cto.getCtime());
+			pstmt.setString(9, cto.getcDate());
+			pstmt.setString(10, cto.getCprice());
+			pstmt.setString(11,  cto.getCplace());
+			pstmt.setString(12,  cto.getClink());
+			pstmt.setString(13,  cto.getCetc());
 			int result = pstmt.executeUpdate();
 						
 			if(result == 1) {
 				flag = 1;
+				System.out.println("[인디등록] : Midx - " + cto.getMem_idx() + " / ctype - " + cto.getCtype() + " / subject - " + cto.getSubject() + " / contents : " + cto.getContents()
+				+ " / posterName : " + cto.getPosterName() + "/ postDate : " + cto.getPosterData() + "/ postSize : " + cto.getPosterSize() + " / cTime : " + cto.getCtime()
+				+ " / cDate:" + cto.getcDate() + " / cPrice : " + cto.getCprice() + " / cPlace : " + cto.getCplace() + " / clink : " + cto.getClink());
 			}
 		} catch(SQLException e) {
 			System.out.println("[sql 에러] : "+ e.getMessage());

@@ -30,20 +30,37 @@ public class App_IndieWrite implements AppAction {
 			
 		try {
 			MultipartRequest multi = 
-					new MultipartRequest(request, uploardpath, maxFileSize, encoding, new DefaultFileRenamePolicy());								
-										
-			cto.setMem_idx(Integer.parseInt(multi.getParameter("mem_idx") == null ? "0" : multi.getParameter("mem_idx").equals("") ? "0" : multi.getParameter("mem_idx")));
-			cto.setSubject(URLDecoder.decode(multi.getParameter("subject") != null ? multi.getParameter("subject") : "", "utf-8"));
-			cto.setCtime(URLDecoder.decode(multi.getParameter("cTime") != null ? multi.getParameter("cTime") : "", "utf-8"));			
-			cto.setCprice(URLDecoder.decode(multi.getParameter("cplace") != null ? multi.getParameter("cplace") : "", "utf-8"));
-			cto.setCplace(URLDecoder.decode(multi.getParameter("cprice") != null ? multi.getParameter("cprice") : "", "utf-8"));
-			cto.setcDate(URLDecoder.decode(multi.getParameter("cDate") != null ? multi.getParameter("cDate") : "", "utf-8"));
-			cto.setContents(URLDecoder.decode(multi.getParameter("contents") !=null ? multi.getParameter("contents") : "", "utf-8"));			
-			cto.setPosterName(URLDecoder.decode(multi.getFilesystemName("filename") != null ? multi.getFilesystemName("filename") : "", "utf-8"));
-			cto.setPosterData(URLDecoder.decode(multi.getOriginalFileName("filename") != null ? multi.getOriginalFileName("filename") : "", "utf-8"));			
-			cto.setCetc(URLDecoder.decode(multi.getParameter("etc") != null ? multi.getParameter("etc") : "" , "utf-8"));
+					new MultipartRequest(request, uploardpath, maxFileSize, encoding, new DefaultFileRenamePolicy());		
 			
-			if(cto.getMem_idx() == 0 || cto.getSubject().equals("") || cto.getCtime().equals("") || cto.getCplace().equals("") || cto.getCprice().equals("") || cto.getcDate().equals("") || cto.getContents().equals("")) {
+			int Mem_idx 	= Integer.parseInt(multi.getParameter("mem_idx") == null ? "0" : multi.getParameter("mem_idx").equals("") ? "0" : multi.getParameter("mem_idx"));
+			String subject 	= multi.getParameter("subject") != null ? URLDecoder.decode(multi.getParameter("subject"), "utf-8") : ""; 
+			String ctime	= multi.getParameter("ctime") != null ? URLDecoder.decode(multi.getParameter("ctime"), "utf-8") : "";
+			String cprice	= multi.getParameter("cplace") != null ? URLDecoder.decode(multi.getParameter("cplace"), "utf-8") : "";
+			String cplace 	= multi.getParameter("cprice") != null ? URLDecoder.decode(multi.getParameter("cprice"), "utf-8") : "";
+			String cDate 	= multi.getParameter("cDate") != null ? URLDecoder.decode(multi.getParameter("cDate"), "utf-8") : "";
+			String content = multi.getParameter("content") !=null ? URLDecoder.decode(multi.getParameter("content"), "utf-8") : "";
+			String pName	= multi.getFilesystemName("filename") != null ? URLDecoder.decode(multi.getFilesystemName("filename"), "utf-8") : "";
+			String pDate	= multi.getOriginalFileName("filename") != null ? URLDecoder.decode(multi.getOriginalFileName("filename"), "utf-8") : "";
+			String cEtc		= multi.getParameter("etc") != null ? URLDecoder.decode(multi.getParameter("etc"), "utf-8") : ""; 
+			int cType		= Integer.parseInt(multi.getParameter("ctype") == null ? "0" : multi.getParameter("ctype").equals("") ? "0" : multi.getParameter("ctype"));
+			String clink		= multi.getParameter("clink") != null ? URLDecoder.decode(multi.getParameter("clink"), "utf-8") : "";
+			
+					
+			cto.setMem_idx(Mem_idx);
+			cto.setSubject(subject);
+			cto.setCtime(ctime);
+			cto.setCprice(cprice);
+			cto.setCplace(cplace);
+			cto.setcDate(cDate);			
+			cto.setContents(content);			
+			cto.setPosterName(pName);
+			cto.setPosterData(pDate);
+			cto.setCetc(cEtc);
+			cto.setCtype(cType);
+			cto.setClink(clink);
+			
+			
+			if(Mem_idx == 0 || subject.equals("") || ctime.equals("") || cplace.equals("") || cprice.equals("") || cDate.equals("") || content.equals("")) {
 					cto.setcFlag(5);					
 			}
 			

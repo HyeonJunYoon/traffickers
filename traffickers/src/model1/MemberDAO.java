@@ -100,15 +100,12 @@ public class MemberDAO {
 		    String sql = "insert into tr_member values (0, ?, PASSWORD(?), ?, ?, ?, ?, now(), 0)";
 		    
 		    pstmt = conn.prepareStatement(sql);
-		   
-		    String birth 	= to.getBirth() != "" ? to.getBirth() : "1999-01-01";
-		    int sex 	= Integer.toString(to.getSex()) != "" ? to.getSex() : 1;
-		    
+		   		    
 		    pstmt.setString(1, to.getUserID());
 		    pstmt.setString(2, to.getUserPWD());
 		    pstmt.setString(3, to.getNickName());
-		    pstmt.setString(4, birth);
-		    pstmt.setInt(5, sex);
+		    pstmt.setString(4, to.getBirth());
+		    pstmt.setInt(5, to.getSex());
 		    pstmt.setInt(6,  to.getJoinType());
 		    	   
 		    int result = pstmt.executeUpdate();
