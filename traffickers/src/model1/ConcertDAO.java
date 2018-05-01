@@ -238,11 +238,12 @@ public class ConcertDAO {
 	public ConcertTO DetailView(ConcertTO to) {
 		int idx = to.getCidx();
 
-		String sql = "select * from tr_concert where idx = ?";
+		String sql = "select idx, view_level, subject, cTime, cPlace, cPrice, cDate, contents, cetc, ctype, clink, fileName from tr_concert where idx = ?";
 		
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -258,7 +259,9 @@ public class ConcertDAO {
 				to.setCetc(rs.getString("cetc"));
 				to.setCtype(rs.getInt("CType"));
 				to.setClink(rs.getString("clink"));
-				to.setPosterName(rs.getString("fileName"));			
+				to.setPosterName(rs.getString("fileName"));	
+				
+				System.out.println(pstmt.toString());
 			}
 		} catch (SQLException e) {
 				to.setcFlag(0);
@@ -266,6 +269,6 @@ public class ConcertDAO {
 			System.out.println("[에러] : " + e.getMessage());
 		}
 		
-		return to;		
+		return to;
 	}
 }
