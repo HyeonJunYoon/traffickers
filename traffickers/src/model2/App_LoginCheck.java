@@ -1,5 +1,6 @@
 package model2;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,13 @@ public class App_LoginCheck implements AppAction {
 		//System.out.println("LoginCheckApp 확인");
 				
 		MemberTO to = new MemberTO();
-			to.setUserID(request.getParameter("id") == null ? "" : URLDecoder.decode(request.getParameter("id")));
-			to.setUserPWD(request.getParameter("pwd") == null ? "" : URLDecoder.decode(request.getParameter("pwd")));
+		
+			try {
+				to.setUserID(request.getParameter("id") == null ? "" : URLDecoder.decode("id", "utf-8"));
+				to.setUserPWD(request.getParameter("pwd") == null ? "" : URLDecoder.decode("pwd", "utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("[encoding 에러]" + e.getMessage());
+			}
 			
 			//System.out.println("id : " + request.getParameter("id") + " / pwd : " + request.getParameter("pwd"));
 					

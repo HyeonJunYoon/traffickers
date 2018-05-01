@@ -13,8 +13,11 @@ public class App_IdenticalCheck implements AppAction {
 		// TODO Auto-generated method stub
 		
 		MemberTO mto = new MemberTO();
-		mto.setIcType(Integer.parseInt(request.getParameter("icType")));
-		mto.setIcValue(request.getParameter("icValue"));
+		
+		int icType 		= Integer.parseInt(request.getParameter("icType") == null ? "1" : request.getParameter("icType").equals("") ? "1" : request.getParameter("icType"));
+		String icValue	= request.getParameter("icValue") == null ? "" : request.getParameter("icValue"); 
+		mto.setIcType(icType);
+		mto.setIcValue(icValue);
 		
 		MemberDAO mdao = new MemberDAO();
 		int flag = mdao.IdenticalCheck(mto);

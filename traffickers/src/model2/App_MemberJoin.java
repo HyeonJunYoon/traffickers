@@ -29,10 +29,7 @@ public class App_MemberJoin implements AppAction {
 			
 			String Bday[] = new String[2];
 			Bday = birth.split("-");
-			
-			System.out.println("id : " + id + " / pwd : " + pwd + " / nickName : " + nickName + " / joinType : " + joinType + " / birth : " + birth + " / gender : " + gender);
-			//System.out.println("Bday[0] : " + Bday[0] + "Bday[1] : " + Bday[1] + "Bday[2] : " + Bday[2]);
-			
+						
 			if(Integer.parseInt(Bday[1]) < 10 ) {
 				Bday[1] = "0" + Bday[1];
 			}

@@ -107,6 +107,8 @@ public class MemberDAO {
 		    pstmt.setString(4, to.getBirth());
 		    pstmt.setInt(5, to.getSex());
 		    pstmt.setInt(6,  to.getJoinType());
+		    
+		    System.out.println(pstmt.toString());
 		    	   
 		    int result = pstmt.executeUpdate();
 			   

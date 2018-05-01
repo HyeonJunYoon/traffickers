@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 
 import model1.MemberTO;
 import model2.AppAction;
+import model2.App_DetailView;
 import model2.App_LoginCheck;
 import model2.App_IndieWrite;
 import model2.App_MemberJoin;
@@ -90,6 +91,12 @@ public class AppController<JSONarray> extends HttpServlet {
 					action.execute(request, response);
 					
 					url = "/board/model2/app_listView.jsp";
+				// 상세뷰
+				}else if(path.equals("/detailView.app")) {
+					action = new App_DetailView();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_detailView.jsp";
 				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(url);

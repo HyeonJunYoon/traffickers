@@ -101,9 +101,9 @@ public class ConcertDAO {
 						
 			if(result == 1) {
 				flag = 1;
-				System.out.println("[인디등록] : Midx - " + cto.getMem_idx() + " / ctype - " + cto.getCtype() + " / subject - " + cto.getSubject() + " / contents : " + cto.getContents()
-				+ " / posterName : " + cto.getPosterName() + "/ postDate : " + cto.getPosterData() + "/ postSize : " + cto.getPosterSize() + " / cTime : " + cto.getCtime()
-				+ " / cDate:" + cto.getcDate() + " / cPrice : " + cto.getCprice() + " / cPlace : " + cto.getCplace() + " / clink : " + cto.getClink());
+				
+				System.out.println("[등록]" + pstmt.toString());				
+				
 			}
 		} catch(SQLException e) {
 			System.out.println("[sql 에러] : "+ e.getMessage());
@@ -233,5 +233,39 @@ public class ConcertDAO {
 	    }
 		
 		return to;	    
+	}
+	
+	public ConcertTO DetailView(ConcertTO to) {
+		int idx = to.getCidx();
+
+		String sql = "select * from tr_concert where idx = ?";
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				to.setcFlag(1);
+				to.setCidx(rs.getInt("idx"));
+				to.setView_level(rs.getInt("view_level"));
+				to.setSubject(rs.getString("subject"));
+				to.setCtime(rs.getString("cTime"));
+				to.setCplace(rs.getString("cPlace"));
+				to.setCprice(rs.getString("cPrice"));
+				to.setcDate(rs.getString("cDate"));
+				to.setContents(rs.getString("contents"));
+				to.setCetc(rs.getString("cetc"));
+				to.setCtype(rs.getInt("CType"));
+				to.setClink(rs.getString("clink"));
+				to.setPosterName(rs.getString("fileName"));			
+			}
+		} catch (SQLException e) {
+				to.setcFlag(0);
+			// TODO Auto-generated catch block
+			System.out.println("[에러] : " + e.getMessage());
+		}
+		
+		return to;		
 	}
 }
