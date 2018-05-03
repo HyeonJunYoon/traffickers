@@ -23,6 +23,20 @@ input[type="text"] {width:300px;}
 	<td><input type="text" name="subject" value="나의 PS 파트너"></td>
 </tr>
 <tr>
+	<td>공연타입</td>
+	<td>
+		<select name="ctype">
+		<option value="0">인디</option>
+		<option value="1">발라드</option>
+		<option value="2">락,메탈</option>
+		<option value="3">힙합,랩</option>
+		<option value="4">재즈</option>
+		<option value="5">포크</option>
+		<option value="6">내한</option>
+		</select>
+	</td>
+</tr>
+<tr>
 	<td>공연시간</td>
 	<td><input type="text" name="ctime" value="90분"></td>
 </tr>
@@ -36,7 +50,7 @@ input[type="text"] {width:300px;}
 </tr>
 <tr>
 	<td>공연일자</td>
-	<td><input type="text" name="cDate" value="2018.04.29"></td>
+	<td><input type="text" name="cDate" value="2018-04-29"></td>
 </tr>
 <tr>
 	<td>내용</td>

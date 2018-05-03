@@ -19,9 +19,6 @@
 		HashMap<String, String> map2 = new HashMap<String, String>();		
 		map2.put("cidx", Integer.toString(lists.get(i).getCidx()));		
 		map2.put("fileName", lists.get(i).getPosterName());
-		map2.put("cPlace", lists.get(i).getCplace());		
-		map2.put("subject", lists.get(i).getSubject());
-		map2.put("cTime", lists.get(i).getCtime());
 		jArray.add(i, map2);
 	}
 		

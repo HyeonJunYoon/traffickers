@@ -25,8 +25,6 @@ public class ConcertTO {
 	private int list_Type;			// [검색] 검색타입 (1 : 통합검색 / 2 : 날짜검색 / 3 : 장르검색 / 4 : 지역검색) 
 	private String list_Value;		// [검색] 검색어
 	private int cFlag;					// 리턴값
-	
-	private ArrayList<ConcertTO> concertlists;
 		
 	public int getCidx() {
 		return cidx;
@@ -153,12 +151,6 @@ public class ConcertTO {
 	}
 	public void setList_Value(String list_Value) {
 		this.list_Value = list_Value;
-	}
-	public ArrayList<ConcertTO> getConcertlists() {
-		return concertlists;
-	}
-	public void setConcertlists(ArrayList<ConcertTO> concertlists) {
-		this.concertlists = concertlists;
 	}
 	public int getcFlag() {
 		return cFlag;

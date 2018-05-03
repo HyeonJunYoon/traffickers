@@ -24,7 +24,7 @@ public class App_IndieWrite implements AppAction {
 		
 		//String uploardpath = "C:/02.Language/06.git/traffickers/traffickers/WebContent/upload/";
 		String uploardpath = "/usr/local/tomcat/webapps/traffickers/upload/";
-		int maxFileSize = 1024 * 1024 * 2; // 2mb 를 풀어서
+		int maxFileSize = 1024 * 1024 * 20; // 20mb 를 풀어서
 		String encoding = "utf-8";
 		int flag = 0;
 			
@@ -67,7 +67,7 @@ public class App_IndieWrite implements AppAction {
 					cto.setcFlag(5);					
 			}
 			
-			 if(!pName.equals("")) {
+			 if(!pName.equals("") && cto.getcFlag() != 5) {
 					File file = multi.getFile("filename");
 					cto.setPosterSize(file.length());
 			}else {

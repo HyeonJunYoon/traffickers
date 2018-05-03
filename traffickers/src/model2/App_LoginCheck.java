@@ -18,15 +18,20 @@ public class App_LoginCheck implements AppAction {
 				
 		MemberTO to = new MemberTO();
 		
-			try {
-				to.setUserID(request.getParameter("id") == null ? "" : URLDecoder.decode("id", "utf-8"));
-				to.setUserPWD(request.getParameter("pwd") == null ? "" : URLDecoder.decode("pwd", "utf-8"));
-			} catch (UnsupportedEncodingException e) {
-				System.out.println("[encoding 에러]" + e.getMessage());
-			}
+		String userID = "";
+		String userpw = "";
 			
-			//System.out.println("id : " + request.getParameter("id") + " / pwd : " + request.getParameter("pwd"));
-					
+		try {
+			userID = request.getParameter("id") != null ? URLDecoder.decode(request.getParameter("id"), "utf-8") : "";
+			userpw = request.getParameter("pwd") != null ? URLDecoder.decode(request.getParameter("pwd"), "utf-8") : "";
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			System.out.println("[encoding 에러]" + e.getMessage());
+		}
+				
+		to.setUserID(userID);
+		to.setUserPWD(userpw);
+								
 			MemberDAO dao = new MemberDAO();
 			
 			to = dao.MemberCheck(to);		

@@ -16,6 +16,7 @@ import model1.MemberTO;
 import model2.AppAction;
 import model2.App_DetailView;
 import model2.App_LoginCheck;
+import model2.App_MainScrollView;
 import model2.App_IndieWrite;
 import model2.App_MemberJoin;
 import model2.App_IdenticalCheck;
@@ -97,6 +98,12 @@ public class AppController<JSONarray> extends HttpServlet {
 					action.execute(request, response);
 					
 					url = "/board/model2/app_detailView.jsp";
+				// Main Scroll View
+				}else if(path.equals("/MainScrollView.app")) {
+					action = new App_MainScrollView();
+					action.execute(request, response);
+					
+					url = "/board/model2/app_MainScrollView.jsp";
 				}
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(url);
