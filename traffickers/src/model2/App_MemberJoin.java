@@ -57,7 +57,7 @@ public class App_MemberJoin implements AppAction {
 			if(mto.getUserID().equals("") || mto.getUserPWD().equals("")) {
 				flag = 5;
 			}else {
-				flag = dao.MemberJoin(mto);				
+				flag = dao.AppMemberJoin(mto);				
 			}			
 
 			request.setAttribute("flag", flag);

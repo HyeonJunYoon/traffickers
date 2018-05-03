@@ -30,22 +30,27 @@ public class MemberDAO {
 	
 	public MemberTO AdminCheck(MemberTO to) {
 	    
+		to.setFlag(0);
+		
 	    try{
 		    conn = dataSource.getConnection();
 		    
-		    String sql = "select aid, alevel from tr_admininfo where aid='?' and apwd=PASSWORD('?')";
+		    String sql = "select aid, alevel from tr_admininfo where aid=? and apwd=PASSWORD(?)";
 		    
 		    pstmt = conn.prepareStatement(sql);
 		   
 		    pstmt.setString(1, to.getAdminID());
 		    pstmt.setString(2, to.getAdminPWD());
+		    
+		    System.out.println("[로그인확인]" + pstmt.toString());
 		    	   
 		    rs = pstmt.executeQuery();
 			   
 		    if(rs.next()){
 		    	to.setAdminID(rs.getString("aid"));
 		    	to.setAdminLevel(rs.getInt("alevel"));
-		    } 		    
+		    	to.setFlag(1);
+		    }
 		    
 	    } catch(SQLException e){
 	    	System.out.println("SQL 에러 : "+ e.getMessage());
@@ -56,7 +61,7 @@ public class MemberDAO {
 		return to;
 	}
 	
-	public MemberTO MemberCheck(MemberTO to) {
+	public MemberTO AppMemberCheck(MemberTO to) {
 	    try{
 		    conn = dataSource.getConnection();
 		    
@@ -90,7 +95,7 @@ public class MemberDAO {
 		return to;		
 	}
 	
-	public int MemberJoin(MemberTO to) {
+	public int AppMemberJoin(MemberTO to) {
 		
 		int flag = 0;		
 		
@@ -126,7 +131,7 @@ public class MemberDAO {
 		   return flag;
 		}
 	
-	public int IdenticalCheck(MemberTO mto) {
+	public int AppIdenticalCheck(MemberTO mto) {
 		
 		int result = 11;
 		
@@ -161,4 +166,88 @@ public class MemberDAO {
 		
 		return flagNum;
 	}
+	
+	public ListTO MemberList(ListTO listTO){
+	    
+		int cpage = listTO.getCpage();
+		int recordPerPage = listTO.getRecordPerPage();
+		int blockPerPage = listTO.getBlockPerPage();
+		
+	    try{
+		    conn = dataSource.getConnection();
+		    
+		    String sql = "select * from tr_member order by idx desc";
+		    
+		    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		    System.out.println("[memberList] :" + pstmt.toString());
+		    
+		    rs = pstmt.executeQuery();
+		    
+		    rs.last();
+		    listTO.setTotalRecord(rs.getRow());
+		    rs.beforeFirst();
+		    
+		    listTO.setTotalPage(((listTO.getTotalRecord() -1) / recordPerPage) + 1);
+		    
+		    int skip = (cpage-1) * recordPerPage;
+		    
+		    ArrayList<MemberTO> lists = new ArrayList();
+		    for(int i=0; i<recordPerPage && rs.next(); i++) {
+		    	MemberTO mto = new MemberTO();
+		    	mto.setUserIdx(rs.getInt("idx"));
+		    	mto.setUserID(rs.getString("id"));
+		    	mto.setNickName(rs.getString("nickName"));
+		    	mto.setBirth(rs.getString("birth"));
+		    	mto.setSex(rs.getInt("sex"));
+		    	mto.setJoinType(rs.getInt("ctype"));
+		    	mto.setJoinDate(rs.getString("wdate"));
+		    	mto.setStatus(rs.getInt("etc"));
+		    	
+		    	lists.add(mto);
+		    }
+		    listTO.setMemberlists(lists);
+		    
+		    listTO.setStartBlock(((cpage-1)/blockPerPage)*blockPerPage+1);
+		    listTO.setEndBlock(((cpage-1)/blockPerPage)*blockPerPage + blockPerPage);
+		    if(listTO.getEndBlock() >= listTO.getTotalPage()) {
+		    	listTO.setEndBlock(listTO.getTotalPage());
+		    }
+
+		    } catch(SQLException e){
+		    	System.out.println("SQL 에러 : "+ e.getMessage());
+		    } finally{
+		    	if(rs != null) try{rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try{conn.close();} catch(SQLException e) {}
+		    }
+		return listTO;
+		}
+	
+		public int MemberStateChange(MemberTO to) {
+				
+				int flag = 0;
+									
+				try {
+					conn = dataSource.getConnection();
+					
+					String sql = "update tr_member set etc = ? where idx = ?";
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, to.getStatus());
+					pstmt.setInt(1, to.getUserIdx());
+					
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						flag = 1;
+					}
+				} catch (SQLException e) {
+					System.out.println("[에러] : " + e.getMessage());
+				} finally {
+			    	if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+					if(conn != null) try{conn.close();}catch(SQLException e) {}
+				}
+												
+				return flag;
+			}	
 }

@@ -46,6 +46,7 @@
 		String contents_text = contents == null ? "-" : contents.replace("\r\n", "<br>"); 
 		String cetc_br = cetc == null ? "-" : cetc.replace("\r\n", "<br>");
 		
+
 			html.append("<div class='container'>");
 			html.append("<div class='row'>");
 			html.append("	<div class='col-xs-12' >");
@@ -58,7 +59,7 @@
 			html.append("					["+ctype_text+"] : "+subject+""); //제목
 			html.append("					<span style='float:right;'>	");
 			html.append("						<a href='concert_modify.tk?idx=" + idx + "&cpage=" + cpage+ "'><button class='btn btn-primary' style='background-color: #403179;'>수정</button></a>");									
-			html.append("						<input class='allatbox' id='submit1' type='button' name='btn_js_prompt' id='btn_js_prompt' onclick='btn_js_prompt_click("+idx+");' value='삭제'>");			
+			html.append("						<input class='allatbox' id='submit1' type='button' name='btn_js_prompt' id='btn_js_prompt' onclick='btn_js_prompt_click();' value='삭제'>");			
 			html.append("					</span>	");
 			html.append("				</div>");							
 			html.append("			</div>");
@@ -161,15 +162,15 @@
 		};		
 	}; */
 	
-	function btn_js_prompt_click(num){
+	function btn_js_prompt_click(){
 			title : "게시물 삭제 알림"
     	  /* prompt(문자열, 초기값) */
     	  var name_value = prompt("게시물 삭제를 원하시면 '삭제' 를 입력해주세요.");
     	  /* if(name_value == true) else false */    
-    	  //console.log(name_value);
+    	  console.log(name_value);
     	  if(name_value == "삭제"){
-    		  //document.getElementById('submit1').submit();
-    		  location.href="concert_delete_ok.tk?idx="+num;
+    		  document.getElementById('submit1').submit();
+    		  alert("게시물이 삭제되었습니다.");
     		  
     	  } else if(name_value == null) {
     		  alert("취소되었습니다.");
@@ -363,6 +364,7 @@ blockquote {
 							<li><a href="memberList.tk" style="font-size: 15px"><span class="glyphicon glyphicon-user"></span>&nbsp;
 									회원 관리</a></li>
 						</ul>
+						
 					</div>
 					<!--/.nav-collapse -->
 				</div>

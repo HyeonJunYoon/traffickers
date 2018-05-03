@@ -17,7 +17,7 @@ public class App_DetailView implements AppAction {
 		cto.setCidx(idx);
 		
 		ConcertDAO dao = new ConcertDAO();
-		cto = dao.DetailView(cto);
+		cto = dao.AppDetailView(cto);
 		
 		request.setAttribute("cto", cto);		
 	}

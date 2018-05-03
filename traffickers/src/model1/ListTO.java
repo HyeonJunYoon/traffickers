@@ -12,6 +12,7 @@ public class ListTO {
 	private int endBlock;
 	
 	private ArrayList<ConcertTO> concertlists;
+	private ArrayList<MemberTO> memberlists;
 
 	public ListTO() {
 		this.cpage = 1;
@@ -84,5 +85,13 @@ public class ListTO {
 
 	public void setConcertlists(ArrayList<ConcertTO> concertlists) {
 		this.concertlists = concertlists;
+	}
+
+	public ArrayList<MemberTO> getMemberlists() {
+		return memberlists;
+	}
+
+	public void setMemberlists(ArrayList<MemberTO> memberlists) {
+		this.memberlists = memberlists;
 	}
 }

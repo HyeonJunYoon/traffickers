@@ -34,7 +34,7 @@ public class App_LoginCheck implements AppAction {
 								
 			MemberDAO dao = new MemberDAO();
 			
-			to = dao.MemberCheck(to);		
+			to = dao.AppMemberCheck(to);		
 			request.setAttribute("to", to);
 	}
 }

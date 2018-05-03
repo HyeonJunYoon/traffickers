@@ -12,9 +12,11 @@
 	
 	String aid 	= to.getAdminID();
 	int alevel	= to.getAdminLevel();	
+	
+	System.out.println("아이디는" + aid);
   		  		
 	   out.println("<script type='text/javascript'>");
-	   if(!aid.equals(null)){
+	   if(to.getFlag() == 1){
 		   out.println("alert('정상적으로 로그인 되었습니다.')");
 		   out.println("location.href='concert_write.tk?aid="+aid+"&alevel="+alevel+"'");
 	   }else{

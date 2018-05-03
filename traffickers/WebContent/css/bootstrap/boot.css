@@ -1,0 +1,25 @@
+/* 전체 영역을 통틀어서 스타일 정의 */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+*{
+	font-family: 'Nanum Gothic';
+}
+a{
+	color: #ffffff;
+}
+a:hover {
+	color: #bbbbbb;
+	text-decoration: none;
+}
+
+.list-group {
+	background-color: #5763a8;
+}
+.navbar-default {
+	padding-top: 20px;
+	background-color: #0078d7;
+}
+
+.navbar-default .navbar-nav >a:hover {
+	color: black;
+	background-color: black;
+}

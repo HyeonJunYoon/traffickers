@@ -1,3 +1,4 @@
+<%@page import="model1.MemberTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -15,36 +16,22 @@
 	
 	StringBuffer html = new StringBuffer();
 
-	ArrayList<ConcertTO> ConcertLists = listTO.getConcertlists();
+	ArrayList<MemberTO> Memberlists = listTO.getMemberlists();
 	int cpage = listTO.getCpage();
 	
 	html.append("<div style='border:0px solid #000; position:relative;'>");	
-	for (int i = 0; i < ConcertLists.size(); i++) {
-		ConcertTO cto = ConcertLists.get(i);
+	for (int i = 0; i < Memberlists.size(); i++) {
+		MemberTO mto = Memberlists.get(i);
 
-		int idx			= cto.getCidx(); 			//콘서트 고유값
-		String subject	= cto.getSubject();    	// 제목
-		String pName	= cto.getPosterName();// 포스트 이미지 네임
-		String dName	= cto.getPosterData(); // 포스트 이미지 변경 파일네임		
-		String User_id	= cto.getUser_id(); 		//유저 아이디
-		String wdate	= cto.getWdate(); 		//등록시간
-		int ctype 		= cto.getCtype(); 		//장르 
-		int view_level	= cto.getView_level(); 	// 1 ~ 10 메인 노출
-		String ctime	= cto.getCtime();  		//공연시간		
-		int view_yn		= cto.getView_yn(); 	// 대기 - 0, 승인 - 1, 보류 - 2
-		String cplace 	= cto.getCplace(); 		//장소
-		String curl		= cto.getCurl(); 			//예메사이트		
-		String cprice	= cto.getCprice(); 		//가격
-		String contents = cto.getContents(); 	//공연정보
-		String cetc 		= cto.getCetc(); 				//공연기타
-
-		//pk ,제목 ,작성자 ,파일네임 ,등록일자 ,장르 ,노출등급 ,공연시간 ,승인상태 ,공연장소  ,예메사이트 ,가격 ,공연정보 ,기타정보						
-		
-		String view_yn_text = view_yn == 0 ? "대기" : view_yn == 1 ? "승인" : "보류" ;
-		String ctype_text = ctype == 0 ? "인디" : ctype == 1 ? "공연" : "보류";
-		String curl_text = curl == null ? "" : curl;
-		String contents_text = contents == null ? "-" : contents.replace("\r\n", "<br>"); 
-		String cetc_br = cetc == null ? "-" : cetc.replace("\r\n", "<br>");
+		int idx				= mto.getUserIdx();
+		String id				= mto.getUserID();
+		String nickName	= mto.getNickName();
+		String birth			= mto.getBirth();
+		String sex			= mto.getSex() == 0 ? "남" : "여";
+		String mtype		= mto.getJoinType() == 1 ? "kakao" :  mto.getJoinType() == 2 ? "fackbook" : "일반";
+		String wdate		= mto.getJoinDate();
+		int State			= mto.getStatus();
+		String StateTxt	= mto.getStatus() == 0 ? "정상" : "차단";			
 		
 			html.append("<div class='container'>");
 			html.append("<div class='row'>");
@@ -58,7 +45,7 @@
 			html.append("					["+ctype_text+"] : "+subject+""); //제목
 			html.append("					<span style='float:right;'>	");
 			html.append("						<a href='concert_modify.tk?idx=" + idx + "&cpage=" + cpage+ "'><button class='btn btn-primary' style='background-color: #403179;'>수정</button></a>");									
-			html.append("						<input class='allatbox' id='submit1' type='button' name='btn_js_prompt' id='btn_js_prompt' onclick='btn_js_prompt_click("+idx+");' value='삭제'>");			
+			html.append("						<input class='allatbox' id='submit1' type='button' name='btn_js_prompt' id='btn_js_prompt' onclick='memberChange_click("+idx+","+StateTxt+","+State+");' value='"+StateTxt+"'>");			
 			html.append("					</span>	");
 			html.append("				</div>");							
 			html.append("			</div>");
@@ -161,21 +148,11 @@
 		};		
 	}; */
 	
-	function btn_js_prompt_click(num){
-			title : "게시물 삭제 알림"
-    	  /* prompt(문자열, 초기값) */
-    	  var name_value = prompt("게시물 삭제를 원하시면 '삭제' 를 입력해주세요.");
-    	  /* if(name_value == true) else false */    
-    	  //console.log(name_value);
-    	  if(name_value == "삭제"){
-    		  //document.getElementById('submit1').submit();
-    		  location.href="concert_delete_ok.tk?idx="+num;
-    		  
-    	  } else if(name_value == null) {
-    		  alert("취소되었습니다.");
-    	  } else {
-    		  alert("잘못 입력하셨습니다."); 
-    	  } 	  
+	function memberChange_click(num, Txt, state){ 
+	  	var check = confirm("현재" + Txt + "입니다."+\n+"변경하시겠습니까?");
+		if(confirm){
+			location.href="memberStatusChange.tk?idx="+num+"&s="+state;
+		}
     }
 
 </script>
@@ -360,7 +337,7 @@ blockquote {
 							<span class="glyphicon glyphicon-star-empty" style="color:white;"></span>&nbsp; 공연 관리</a></li>
 							<li><a href="concert_list_indie.tk" style="font-size: 15px"><span class="glyphicon glyphicon-music"></span>&nbsp;
 									인디 관리 <span class="badge pull-right">42</span></a></li>
-							<li><a href="memberList.tk" style="font-size: 15px"><span class="glyphicon glyphicon-user"></span>&nbsp;
+							<li><a href="#" style="font-size: 15px"><span class="glyphicon glyphicon-user"></span>&nbsp;
 									회원 관리</a></li>
 						</ul>
 					</div>

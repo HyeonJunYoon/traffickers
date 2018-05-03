@@ -37,6 +37,7 @@ public class ConcertWriteOkAction implements ConcertAction {
 			to.setContents(multi.getParameter("contents"));
 			to.setCtime(multi.getParameter("ctime"));
 			to.setCprice(multi.getParameter("cprice"));
+			to.setcDate(multi.getParameter("cDate"));
 			to.setCplace(multi.getParameter("cplace"));
 			to.setClink(multi.getParameter("clink"));
 			to.setCurl(multi.getParameter("curl"));

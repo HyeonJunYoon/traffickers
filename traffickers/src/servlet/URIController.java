@@ -11,23 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model2.BoardAction;
-import model2.DeleteAction;
-import model2.DeleteOkAction;
-import model2.ListAction;
-import model2.ModifyAction;
-import model2.ModifyOkAction;
-import model2.ViewAction;
-import model2.WriteOkAction;
-
 import model2.ConcertAction;
+import model2.ConcertDeleteOkAction;
 import model2.AdminLoginAction;
 import model2.AdminLoginOkAction;
 import model2.ConcertWriteAction;
 import model2.ConcertWriteOkAction;
+import model2.MemberListAction;
+import model2.MemberStateChangeAction;
 import model2.ConcertListAction;
-
+import model2.ConcertList_indieAction;
+import model2.ConcertModifyAction;
+import model2.ConcertModifyOkAction;
 import model2.App_LoginCheck;
+import model2.BoardAction;
 
 /**
  * Servlet implementation class URIController
@@ -64,9 +61,7 @@ public class URIController extends HttpServlet {
 			String url = "";
 			BoardAction action = null;
 			ConcertAction cAction = null;
-			
-			System.out.println("url 에러 : "+url);
-				
+						
 			if(path.equals("/*.tk") || path.equals("/admin_login.tk")) {
 				action = new AdminLoginAction();
 				
@@ -91,15 +86,50 @@ public class URIController extends HttpServlet {
 				cAction.execute(request, response);
 				
 				url = "/board/model2/concertWrite_ok.jsp";
+				
 			}else if(path.equals("/concert_list.tk")) {
 				cAction = new ConcertListAction();
 				
 				cAction.execute(request, response);
 				
-				url = "/board/model2/concertList.jsp";
+				url = "/board/model2/concertList.jsp";				
+			}else if(path.equals("/concert_list_indie.tk")) {	
+				cAction = new ConcertList_indieAction();
+				
+				cAction.execute(request, response);
+				
+				url = "/board/model2/concertList_indie.jsp";
+				
+			}else if(path.equals("/concert_modify.tk")) {				
+				cAction = new ConcertModifyAction();				
+				cAction.execute(request, response);
+				
+				url = "/board/model2/concertModify.jsp";
+				
+			}else if(path.equals("/concert_modify_ok.tk")) {
+				cAction = new ConcertModifyOkAction();
+				
+				cAction.execute(request, response);
+				
+				url = "/board/model2/concertModify_ok.jsp";				
+				
+			}else if(path.equals("/concert_delete_ok.tk")) {
+				cAction = new ConcertDeleteOkAction();
+				cAction.execute(request, response);
+				
+				url = "/board/model2/concertDelete_ok.jsp";
+			}else if(path.equals("/memberList.tk")) {
+				cAction = new MemberListAction();
+				cAction.execute(request, response);
+				
+				url = "/board/model2/memberList.jsp";
+			}else if(path.equals("/memberStateChange.tk")) {
+				cAction = new MemberStateChangeAction();
+				cAction.execute(request, response);
+				
+				url = "/board/model2/MemberStateChange.jsp";				
 			}
 			
-			System.out.println("url 에러 : "+url);
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
 		} catch (UnsupportedEncodingException e) {

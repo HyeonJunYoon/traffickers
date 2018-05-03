@@ -114,6 +114,10 @@
 					<td><input type="text" name="cplace" value="" class="board_view_input_text" /></td>					
 				</tr>
 				<tr>
+					<th>공연 일자</th>
+					<td colspan="3"><textarea name="cDate" class="board_editor_area2"></textarea></td>
+				</tr>				
+				<tr>
 					<th>공연 금액</th>
 					<td colspan="3"><textarea name="cprice" class="board_editor_area2"></textarea></td>
 				</tr>
@@ -143,7 +147,7 @@
 			
 			<div class="btn_area">
 				<div class="align_left">
-					<button type="button" class="btn_list btn_txt02" style="cursor: pointer;" onclick="location.href='board_list1.jsp'">목록</button>
+					<button type="button" class="btn_list btn_txt02" style="cursor: pointer;" onclick="location.href='concert_list.tk'">목록</button>
 				</div>
 				<div class="align_right">
 					<button type="button" id="submit1" class="btn_write btn_txt01" style="cursor: pointer;">등록</button>

@@ -20,7 +20,7 @@ public class App_IdenticalCheck implements AppAction {
 		mto.setIcValue(icValue);
 		
 		MemberDAO mdao = new MemberDAO();
-		int flag = mdao.IdenticalCheck(mto);
+		int flag = mdao.AppIdenticalCheck(mto);
 		
 		request.setAttribute("flag", flag);
 		

@@ -12,7 +12,7 @@ public class MemberTO {
 	private String Birth;				// 생일자
 	private int Sex;					// 성별
 	private int JoinType;			// 회원가입 유형 - 일반 : 0 / kakao : 1/ facebook : 2
-	private int JoinDate;			// 회원가입날짜
+	private String JoinDate;			// 회원가입날짜
 	private int Status;				// 상태 - 정상 : 0 / 차단 - 1
 	private int flag;					// 리턴값
 	private int icType;				// 중복체크 타입 - 닉네임 : 1 / 아이디 : 2
@@ -78,10 +78,10 @@ public class MemberTO {
 	public void setJoinType(int joinType) {
 		JoinType = joinType;
 	}
-	public int getJoinDate() {
+	public String getJoinDate() {
 		return JoinDate;
 	}
-	public void setJoinDate(int joinDate) {
+	public void setJoinDate(String joinDate) {
 		JoinDate = joinDate;
 	}
 	public int getStatus() {

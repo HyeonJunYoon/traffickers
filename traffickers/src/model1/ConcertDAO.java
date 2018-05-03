@@ -73,47 +73,7 @@ public class ConcertDAO {
 		}
 		   return flag;		
 	}
-	
-	// app에서 인디 등록
-	public int App_indieWriteOk(ConcertTO cto) {
 		
-		int flag = 0;
-		
-		try {
-			conn = dataSource.getConnection();
-			String sql = "insert into tr_concert values(0, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', ?,  now())";
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cto.getCtype());
-			pstmt.setInt(2, cto.getMem_idx());
-			pstmt.setString(3, cto.getSubject());
-			pstmt.setString(4, cto.getContents());
-			pstmt.setString(5, cto.getPosterName());
-			pstmt.setString(6, cto.getPosterData());
-			pstmt.setLong(7, cto.getPosterSize());
-			pstmt.setString(8, cto.getCtime());
-			pstmt.setString(9, cto.getcDate());
-			pstmt.setString(10, cto.getCprice());
-			pstmt.setString(11,  cto.getCplace());
-			pstmt.setString(12,  cto.getClink());
-			pstmt.setString(13,  cto.getCetc());
-			int result = pstmt.executeUpdate();
-						
-			if(result == 1) {
-				flag = 1;
-				
-				System.out.println("[등록]" + pstmt.toString());				
-				
-			}
-		} catch(SQLException e) {
-			System.out.println("[sql 에러] : "+ e.getMessage());
-		}finally {
-			if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
-			if(conn != null) try{conn.close();}catch(SQLException e) {}
-		}
-		   return flag;		
-	}
-	
 	public ListTO ConcertList(ListTO listTO){
 	    
 		int cpage = listTO.getCpage();
@@ -138,9 +98,12 @@ public class ConcertDAO {
 		    		+ "c.cprice, "
 		    		+ "c.cplace, "
 		    		+ "c.wdate "
-		    		+ "from tr_concert c left join tr_member m on c.mem_idx = m.idx order by c.idx desc";
+		    		+ "from tr_concert c left join tr_member m on c.mem_idx = m.idx "
+		    		+ "where c.ctype != 0 "
+		    		+ "order by c.idx desc";
 		    
 		    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		    System.out.println("[concertList] :" + pstmt.toString());
 		    
 		    rs = pstmt.executeQuery();
 		    
@@ -190,6 +153,148 @@ public class ConcertDAO {
 		return listTO;
 	}
 	
+	public ListTO ConcertList_indie(ListTO listTO){
+	    
+		int cpage = listTO.getCpage();
+		int recordPerPage = listTO.getRecordPerPage();
+		int blockPerPage = listTO.getBlockPerPage();
+		
+	    try{
+		    conn = dataSource.getConnection();
+		    
+		    String sql = "select "
+		    		+ "c.idx, "
+		    		+ "c.ctype, "
+		    		+ "c.mem_idx, "
+		    		+ "m.id, "
+		    		+ "c.view_yn, "
+		    		+ "c.view_level, "
+		    		+ "c.subject, "
+		    		+ "c.fileName, "
+		    		+ "c.dataName, "
+		    		+ "c.ctime, "
+		    		+ "c.cDate, "		    		
+		    		+ "c.cprice, "
+		    		+ "c.cplace, "
+		    		+ "c.wdate "
+		    		+ "from tr_concert c left join tr_member m on c.mem_idx = m.idx "
+		    		+ "where c.ctype = 0 "
+		    		+ "order by c.idx desc";
+		    
+		    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		    System.out.println("[concertList] :" + pstmt.toString());
+		    
+		    rs = pstmt.executeQuery();
+		    	    
+		    rs.last();
+		    listTO.setTotalRecord(rs.getRow());
+		    rs.beforeFirst();
+		    		    
+		    listTO.setTotalPage(((listTO.getTotalRecord() -1) / recordPerPage) + 1);
+		    
+		    int skip = (cpage-1) * recordPerPage;
+		    
+		    ArrayList<ConcertTO> lists = new ArrayList();
+		    for(int i=0; i<recordPerPage && rs.next(); i++) {
+		    	ConcertTO cto = new ConcertTO();
+		    	cto.setCidx(rs.getInt("idx"));
+		    	cto.setCtype(rs.getInt("ctype"));
+		    	cto.setMem_idx(rs.getInt("mem_idx"));
+		    	cto.setUser_id(rs.getString("id"));
+		    	cto.setView_yn(rs.getInt("view_yn"));
+		    	cto.setView_level(rs.getInt("view_level"));
+		    	cto.setSubject(rs.getString("subject"));
+		    	cto.setPosterName(rs.getString("fileName"));
+		    	cto.setPosterData(rs.getString("dataName"));
+		    	cto.setCtime(rs.getString("ctime"));
+		    	cto.setcDate(rs.getString("cDate"));
+		    	cto.setCprice(rs.getString("cprice"));
+		    	cto.setCplace(rs.getString("cplace"));
+		    	cto.setWdate(rs.getString("wdate"));		    	
+		    	
+		    	lists.add(cto);
+		    }
+		    listTO.setConcertlists(lists);
+		    
+		    listTO.setStartBlock(((cpage-1)/blockPerPage)*blockPerPage+1);
+		    listTO.setEndBlock(((cpage-1)/blockPerPage)*blockPerPage + blockPerPage);
+		    if(listTO.getEndBlock() >= listTO.getTotalPage()) {
+		    	listTO.setEndBlock(listTO.getTotalPage());
+		    }
+
+		    } catch(SQLException e){
+		    	System.out.println("SQL 에러 : "+ e.getMessage());
+		    } finally{
+		    	if(rs != null) try{rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try{conn.close();} catch(SQLException e) {}
+		    }
+		return listTO;
+	}
+
+	public int ConcertDeleteOk(ConcertTO to) {
+		int flag = 1;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "delete from tr_concert where idx = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,  to.getCidx());		
+			
+			int result = pstmt.executeUpdate();
+						
+			if(result == 1) {
+				flag = 0;
+			}
+		} catch(SQLException e) {
+			System.out.println("[sql 에러] : "+ e.getMessage());
+		}finally {
+			if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();}catch(SQLException e) {}
+		}
+		   return flag;			
+	}
+	
+	// app에서 인디 등록
+	public int App_indieWriteOk(ConcertTO cto) {
+		
+		int flag = 0;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "insert into tr_concert values(0, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', ?,  now())";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cto.getCtype());
+			pstmt.setInt(2, cto.getMem_idx());
+			pstmt.setString(3, cto.getSubject());
+			pstmt.setString(4, cto.getContents());
+			pstmt.setString(5, cto.getPosterName());
+			pstmt.setString(6, cto.getPosterData());
+			pstmt.setLong(7, cto.getPosterSize());
+			pstmt.setString(8, cto.getCtime());
+			pstmt.setString(9, cto.getcDate());
+			pstmt.setString(10, cto.getCprice());
+			pstmt.setString(11,  cto.getCplace());
+			pstmt.setString(12,  cto.getClink());
+			pstmt.setString(13,  cto.getCetc());
+			int result = pstmt.executeUpdate();
+						
+			if(result == 1) {
+				flag = 1;
+				
+				System.out.println("[등록]" + pstmt.toString());				
+				
+			}
+		} catch(SQLException e) {
+			System.out.println("[sql 에러] : "+ e.getMessage());
+		}finally {
+			if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();}catch(SQLException e) {}
+		}
+		   return flag;		
+	}
 	
 	public ArrayList<ConcertTO> AppListView(ConcertTO cto){		
 		
@@ -213,7 +318,9 @@ public class ConcertDAO {
 		}else {
 			search_value = "%"+cto.getList_Value()+"%";
 			sql += " subject like ?";
-		}		
+		}
+		
+		sql += " order by idx desc";
 		
 	    ArrayList<ConcertTO> lists = new ArrayList<ConcertTO>();			    
 		
@@ -249,7 +356,7 @@ public class ConcertDAO {
 		return lists;
 	}
 	
-	public ConcertTO DetailView(ConcertTO to) {
+	public ConcertTO AppDetailView(ConcertTO to) {
 		int idx = to.getCidx();
 
 		String sql = "select idx, view_level, subject, cTime, cPlace, cPrice, cDate, contents, cetc, ctype, clink, fileName from tr_concert where idx = ?";
@@ -316,4 +423,161 @@ public class ConcertDAO {
 		
 		return lists;
 	}	
+	
+	public ConcertTO ConcertModify(ConcertTO cto) {		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {			
+			conn = dataSource.getConnection();
+			
+			String sql = "select "
+		    		+ "c.idx,"//idx
+		    		+ "c.ctype,"//공연타입
+		    		+ "c.mem_idx,"//회원idx
+		    		+ "m.id,"//회원id
+		    		+ "c.view_yn,"//등록승인상태
+		    		+ "c.view_level,"//메인페이지 노출 레벨
+		    		+ "c.subject," //제목
+		    		+ "c.fileName," //파일명(원본)
+		    		+ "c.dataName," //서버 보유 파일명
+		    		+ "c.ctime," //시간		    		    		
+		    		+ "c.cprice,"//금액
+		    		+ "c.cplace,"//장소		    		
+		    		+ "c.clink," //홍보사이트
+		    		+ "c.curl," // 예메사이트*
+		    		+ "c.contents," //내용
+		    		+ "c.cetc " // 기타사항
+		    		+ "from tr_concert c left join tr_member m on c.mem_idx = m.idx where c.idx=?";	
+						
+			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
+			pstmt.setInt(1, cto.getCidx());
+			
+			rs = pstmt.executeQuery();	
+			
+			if(rs.next()) {
+				cto.setCidx(rs.getInt("idx"));
+		    	cto.setCtype(rs.getInt("ctype"));
+		    	cto.setMem_idx(rs.getInt("mem_idx"));
+		    	cto.setUser_id(rs.getString("id"));
+		    	cto.setView_yn(rs.getInt("view_yn"));
+		    	cto.setView_level(rs.getInt("view_level"));
+		    	cto.setSubject(rs.getString("subject"));
+		    	cto.setPosterName(rs.getString("fileName"));
+		    	cto.setPosterData(rs.getString("dataName"));
+		    	cto.setCtime(rs.getString("ctime"));		    	
+		    	cto.setCprice(rs.getString("cprice"));
+		    	cto.setCplace(rs.getString("cplace"));
+		    	cto.setClink(rs.getString("clink"));		    	
+		    	cto.setCurl(rs.getString("curl"));
+		    	cto.setContents(rs.getString("contents"));
+		    	cto.setCetc(rs.getString("cetc"));		    			    			    
+			}			
+		} catch(SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if(rs !=null) try {rs.close();} catch(SQLException e) {};
+			if(pstmt !=null) try {pstmt.close();} catch(SQLException e) {};
+			if(conn !=null) try {conn.close();} catch(SQLException e) {};	
+		}		
+		return cto;
+	}
+	
+	public int ConcertModifyOk(ConcertTO cto) {
+		Connection conn = null;
+	    PreparedStatement pstmt = null; 
+	    String filename = cto.getPosterName();
+	    int flag = 2; 
+	    
+	    try{
+		    conn = dataSource.getConnection();
+		    
+		    // 업로드 파일이 있을때
+		    String sql1 = "update tr_concert set "
+		    		+ "view_yn = ?,"
+		    		+ "view_level = ?,"
+		    		+ "subject = ?,"
+		    		+ "contents = ?,"		    		
+		    		+ "filename = ?,"
+		    		+ "dataname = ?,"
+		    		+ "filesize = ?,"
+		    		+ "ctime = ?,"
+		    		+ "cprice = ?,"
+		    		+ "cplace = ?,"
+		    		+ "clink = ?,"
+		    		+ "curl = ?,"
+		    		+ "ctype = ?,"
+		    		+ "cetc = ?"
+		    		+ " where idx = ?";
+		    // 업로드 파일이 없을때
+		    String sql2 = "update tr_concert set "
+		    		+ "view_yn = ?,"
+		    		+ "view_level = ?,"
+		    		+ "subject = ?,"
+		    		+ "contents = ?,"		    		
+		    		+ "ctime = ?,"
+		    		+ "cprice = ?,"
+		    		+ "cplace = ?,"
+		    		+ "clink = ?,"
+		    		+ "curl = ?,"
+		    		+ "ctype = ?,"
+		    		+ "cetc = ?"
+		    		+ " where idx = ?";
+		    if(filename == null) {//업로드 파일이 없을때
+		    	pstmt = conn.prepareStatement(sql2);
+		    	
+		    	 pstmt.setInt(1, cto.getView_yn());
+				    pstmt.setInt(2, cto.getView_level());		    
+				    pstmt.setString(3, cto.getSubject());
+				    pstmt.setString(4, cto.getContents());
+				    pstmt.setString(5, cto.getCtime());
+				    pstmt.setString(6, cto.getCprice());
+				    pstmt.setString(7, cto.getCplace());
+				    pstmt.setString(8, cto.getClink());
+				    pstmt.setString(9, cto.getCurl());
+				    pstmt.setInt(10, cto.getCtype());
+				    pstmt.setString(11, cto.getCetc());
+				    pstmt.setInt(12, cto.getCidx());
+		    } else {//파일이 있을때
+		    	pstmt = conn.prepareStatement(sql1);
+		    	
+		    	pstmt.setInt(1, cto.getView_yn());
+			    pstmt.setInt(2, cto.getView_level());		    
+			    pstmt.setString(3, cto.getSubject());
+			    pstmt.setString(4, cto.getContents());
+			    pstmt.setString(5, cto.getPosterName());
+			    pstmt.setString(6, cto.getPosterData());
+			    pstmt.setLong(7, cto.getPosterSize());
+			    pstmt.setString(8, cto.getCtime());
+			    pstmt.setString(9, cto.getCprice());
+			    pstmt.setString(10, cto.getCplace());
+			    pstmt.setString(11, cto.getClink());
+			    pstmt.setString(12, cto.getCurl());
+			    pstmt.setInt(13, cto.getCtype());
+			    pstmt.setString(14, cto.getCetc());
+			    pstmt.setInt(15, cto.getCidx());
+		    }		    		
+		    
+		    System.out.println("idx 받아왔냐 : "+cto.getCidx());
+		    System.out.println("filesize 받아왔냐 : "+cto.getPosterSize());
+		    
+		    int result = pstmt.executeUpdate();
+		   
+		    System.out.println("modify 쿼리 값 : "+result);
+		    
+		   if(result == 0){			   
+			   flag = 1;
+		   }else if(result == 1){
+			   flag = 0;
+		   }
+		    
+	    } catch(SQLException e){
+	    	System.out.println("SQL 에러 : "+ e.getMessage());
+	    } finally{
+	    	if(pstmt != null) try{pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try{conn.close();}catch(SQLException e) {}
+	    }
+		return flag;
+	}
 }
