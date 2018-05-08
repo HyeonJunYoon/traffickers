@@ -149,7 +149,7 @@
 	}; */
 	
 	function memberChange_click(num, Txt, state){ 
-	  	var check = confirm("현재" + Txt + "입니다."+\n+"변경하시겠습니까?");
+	  	var check = confirm("현재" + Txt + "입니다.\\n변경하시겠습니까?");
 		if(confirm){
 			location.href="memberStatusChange.tk?idx="+num+"&s="+state;
 		}

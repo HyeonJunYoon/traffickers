@@ -18,6 +18,10 @@
 	ArrayList<ConcertTO> ConcertLists = listTO.getConcertlists();
 	int cpage = listTO.getCpage();
 	
+	String pageingUrl = "/form/pageing.jsp";
+	int startBlock = listTO.getStartBlock();
+	int endBlock = listTO.getEndBlock();
+	
 	html.append("<div style='border:0px solid #000; position:relative;'>");	
 	for (int i = 0; i < ConcertLists.size(); i++) {
 		ConcertTO cto = ConcertLists.get(i);
@@ -155,13 +159,12 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Insert title here</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="./js/jquery-ui.js"></script>
 <script type="text/javascript">
-	/* window.onload = function() {
-		document.getElementById('submit1').onclick = function() {
-			document.frm.submit();
-		};		
-	}; */
-	
 	function btn_js_prompt_click(){
 			title : "게시물 삭제 알림"
     	  /* prompt(문자열, 초기값) */
@@ -178,13 +181,7 @@
     		  alert("잘못 입력하셨습니다."); 
     	  } 	  
     }
-
-</script>
-<title>Insert title here</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<script src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-	<script type="text/javascript" src="./js/jquery-ui.js"></script>
+</script>	
 	<!-- css -->
 <style type="text/css">
 .allatbox{
@@ -343,47 +340,12 @@ blockquote {
 </head>
 <body>
 	<div class="row affix-row">
-		<div class="col-sm-3 col-md-2 affix-sidebar">
-			<div class="sidebar-nav">
-				<div class="navbar navbar-default" role="navigation">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse"
-							data-target=".sidebar-navbar-collapse">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-					</div>
-					<div class="navbar-collapse collapse sidebar-navbar-collapse">
-						<ul class="nav navbar-nav" id="sidenav01">
-							<li class="active"><a href="concert_list.tk"><img src="images/traffickers_icon3.jpg"; ></a></li>							
-							<li style="background-color: black;"><a href="concert_list.tk" style="color:white; font-size: 15px">
-							<span class="glyphicon glyphicon-star-empty" style="color:white;"></span>&nbsp; 공연 관리</a></li>
-							<li><a href="concert_list_indie.tk" style="font-size: 15px"><span class="glyphicon glyphicon-music"></span>&nbsp;
-									인디 관리 <span class="badge pull-right">42</span></a></li>
-							<li><a href="memberList.tk" style="font-size: 15px"><span class="glyphicon glyphicon-user"></span>&nbsp;
-									회원 관리</a></li>
-						</ul>
-						
-					</div>
-					<!--/.nav-collapse -->
-				</div>
-			</div>
-		</div>
+		<%@ include file="/form/menu.jsp" %>
 		
 		<div class="col-sm-9 col-md-10 affix-content">
 			<div class="container">
-				<div class="page-header">
-					<div style="font-size: 30px;margin-top: 20px">						
-						<!-- 검색 -->
-							<span class="glyphicon glyphicon-th-list" style="margin-left: 8%; color:#337ab7;"></span>&nbsp; 공연 리스트
-		  					<span style="float:right; margin-right: 8%">
-		  					<input type="text" id="search" class="nav-right" style="font-size: 70%;">		  					
-		  					<button class="btn btn-primary" style="font-size: 15px;">검색</button>
-		  					<button type="button" class="btn btn-primary" style="font-size: 15px;" onclick="location.href">쓰기</button>
-		  					</span>		
-					</div>
-				</div>
+			<%@ include file="/form/search.jsp" %>
+
 				<!-- 검색 end -->					
 
 		<!-- 게시판 start -->		
@@ -391,61 +353,15 @@ blockquote {
 		<!-- 게시판 end -->
 	
 
-			</div>				
-<!--페이지넘버-->
-	<div class="paginate_regular">
-		<div class="board_pagetab">
-			<%
-				int startBlock = listTO.getStartBlock();
-				int endBlock = listTO.getEndBlock();
-				if (endBlock >= totalPage) {
-					endBlock = totalPage;
-				}
-				if (startBlock == 1) {
-					out.println("<span class='off'>&lt;&lt;</span>");
-				} else {
-					out.println("<span class='on'><a href='./concert_list.tk?cpage=" + (startBlock - blockPerPage)
-							+ "'>&lt;&lt;</a></span>");
-				}
-			%>
-			&nbsp;
-			<%
-				if (cpage == 1) {
-					out.println("<span class='on'>&lt;</span>");
-				} else {
-					out.println("<span class='on'><a href='./concert_list.tk?cpage=" + (cpage - 1) + "'>&lt;</a></span>");
-				}
-			%>
-			&nbsp;&nbsp;
-			<%
-				for (int i = startBlock; i <= endBlock; i++) {
-					if (cpage == i) {
-						out.println("<span class='on'>[" + i + "]</span>");
-					} else {
-						out.println("<span class='off'><a href='./concert_list.tk?cpage=" + i + "'>" + i + "</a></span>");
-					}
-				}
-			%>
-			&nbsp;&nbsp;
-			<%
-				if (cpage == totalPage) {
-					out.println("<span class='on'>&gt;</span>");
-				} else {
-					out.println("<span class='on'><a href='./concert_list.tk?cpage=" + (cpage + 1) + "'>&gt;</a></span>");
-				}
-			%>
-			<%
-				if (endBlock == totalPage) {
-					out.println("<span class='off'>&gt;&gt;</span>");
-				} else {
-					out.println("<span class='on'><a href='./concert_list.tk?cpage=" + (startBlock + blockPerPage)
-							+ "'>&gt;&gt;</a></span>");
-				}
-			%>
-			&nbsp;
-		</div>
-	</div>
-	<!--//페이지넘버-->
+			</div>
+			
+			<jsp:include page="<%=pageingUrl%>" flush="false">			
+				<jsp:param name="startBlock" value="<%=startBlock%>" />
+				<jsp:param name="endBlock" value="<%=endBlock%>" />
+				<jsp:param name="totalPage" value="<%=totalPage%>" />
+				<jsp:param name="cpage" value="<%=cpage%>" />
+				<jsp:param name="blockPerPage" value="<%=blockPerPage%>" />
+			</jsp:include>
 		</div>
 	</div>
 </body>

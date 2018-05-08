@@ -6,13 +6,14 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
-<title>Insert title here</title>
+<title>공연 정보 입력페이지</title>
 <style>
 input[type="text"] {width:300px;}
 </style>
 </head>
 <body>
 <form method="post" action="./indie_write.app" enctype="multipart/form-data">
+<input type='hidden' name='insertType' value='1'>
 <table border='1' cellpadding='0' cellspacing='0' width='80%'>
 <tr>
 	<td width='20%'>회원번호</td>

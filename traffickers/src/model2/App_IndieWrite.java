@@ -27,23 +27,51 @@ public class App_IndieWrite implements AppAction {
 		int maxFileSize = 1024 * 1024 * 20; // 20mb 를 풀어서
 		String encoding = "utf-8";
 		int flag = 0;
+		
+		int Mem_idx 	= 0;
+		String subject 	= ""; 
+		String ctime	= "";
+		String cplace	= "";
+		String cprice 	= "";
+		String cDate 	= "";
+		String content = "";
+		String pName	= "";
+		String pDate	= "";
+		String cEtc		= ""; 
+		int cType		= 0;
+		String clink		= "";				
 			
 		try {
 			MultipartRequest multi = 
 					new MultipartRequest(request, uploardpath, maxFileSize, encoding, new DefaultFileRenamePolicy());		
 			
-			int Mem_idx 	= Integer.parseInt(multi.getParameter("mem_idx") == null ? "0" : multi.getParameter("mem_idx").equals("") ? "0" : multi.getParameter("mem_idx"));
-			String subject 	= multi.getParameter("subject") != null ? URLDecoder.decode(multi.getParameter("subject"), "utf-8") : ""; 
-			String ctime	= multi.getParameter("ctime") != null ? URLDecoder.decode(multi.getParameter("ctime"), "utf-8") : "";
-			String cplace	= multi.getParameter("cplace") != null ? URLDecoder.decode(multi.getParameter("cplace"), "utf-8") : "";
-			String cprice 	= multi.getParameter("cprice") != null ? URLDecoder.decode(multi.getParameter("cprice"), "utf-8") : "";
-			String cDate 	= multi.getParameter("cDate") != null ? URLDecoder.decode(multi.getParameter("cDate"), "utf-8") : "";
-			String content = multi.getParameter("content") !=null ? URLDecoder.decode(multi.getParameter("content"), "utf-8") : "";
-			String pName	= multi.getFilesystemName("filename") != null ? multi.getFilesystemName("filename") : "";
-			String pDate	= multi.getOriginalFileName("filename") != null ? multi.getOriginalFileName("filename") : "";
-			String cEtc		= multi.getParameter("etc") != null ? URLDecoder.decode(multi.getParameter("etc"), "utf-8") : ""; 
-			int cType		= Integer.parseInt(multi.getParameter("ctype") == null ? "0" : multi.getParameter("ctype").equals("") ? "0" : multi.getParameter("ctype"));
-			String clink		= multi.getParameter("clink") != null ? URLDecoder.decode(multi.getParameter("clink"), "utf-8") : "";
+			if(Integer.parseInt(multi.getParameter("insertType")) == 1) {
+				Mem_idx 	= Integer.parseInt(multi.getParameter("mem_idx") == null ? "0" : multi.getParameter("mem_idx").equals("") ? "0" : multi.getParameter("mem_idx"));
+				subject 		= multi.getParameter("subject") != null ? multi.getParameter("subject") : ""; 
+				ctime			= multi.getParameter("ctime") != null ? multi.getParameter("ctime") : "";
+				cplace		= multi.getParameter("cplace") != null ? multi.getParameter("cplace") : "";
+				cprice 		= multi.getParameter("cprice") != null ? multi.getParameter("cprice") : "";
+				cDate 		= multi.getParameter("cDate") != null ? multi.getParameter("cDate") : "";
+				content 		= multi.getParameter("content") !=null ? multi.getParameter("content") : "";
+				pName		= multi.getFilesystemName("filename") != null ? multi.getFilesystemName("filename") : "";
+				pDate			= multi.getOriginalFileName("filename") != null ? multi.getOriginalFileName("filename") : "";
+				cEtc			= multi.getParameter("etc") != null ? multi.getParameter("etc") : ""; 
+				cType		= Integer.parseInt(multi.getParameter("ctype") == null ? "0" : multi.getParameter("ctype").equals("") ? "0" : multi.getParameter("ctype"));
+				clink			= multi.getParameter("clink") != null ? multi.getParameter("clink") : "";				
+			}else{			
+				 Mem_idx 	= Integer.parseInt(multi.getParameter("mem_idx") == null ? "0" : multi.getParameter("mem_idx").equals("") ? "0" : multi.getParameter("mem_idx"));
+				 subject 	= multi.getParameter("subject") != null ? URLDecoder.decode(multi.getParameter("subject"), "utf-8") : ""; 
+				 ctime	= multi.getParameter("ctime") != null ? URLDecoder.decode(multi.getParameter("ctime"), "utf-8") : "";
+				 cplace	= multi.getParameter("cplace") != null ? URLDecoder.decode(multi.getParameter("cplace"), "utf-8") : "";
+				 cprice 	= multi.getParameter("cprice") != null ? URLDecoder.decode(multi.getParameter("cprice"), "utf-8") : "";
+				 cDate 	= multi.getParameter("cDate") != null ? URLDecoder.decode(multi.getParameter("cDate"), "utf-8") : "";
+				 content = multi.getParameter("content") !=null ? URLDecoder.decode(multi.getParameter("content"), "utf-8") : "";
+				 pName	= multi.getFilesystemName("filename") != null ? multi.getFilesystemName("filename") : "";
+				 pDate	= multi.getOriginalFileName("filename") != null ? multi.getOriginalFileName("filename") : "";
+				 cEtc		= multi.getParameter("etc") != null ? URLDecoder.decode(multi.getParameter("etc"), "utf-8") : ""; 
+				 cType		= Integer.parseInt(multi.getParameter("ctype") == null ? "0" : multi.getParameter("ctype").equals("") ? "0" : multi.getParameter("ctype"));
+				 clink		= multi.getParameter("clink") != null ? URLDecoder.decode(multi.getParameter("clink"), "utf-8") : "";
+			}
 			
 			System.out.println("Midx:"+Mem_idx+"/ subject:"+ subject+"/ ctime:"+
 			ctime+"/ cprice:"+cprice+"/ cplace: "+cplace+"/ cDate: "+cDate+"/ content:"+

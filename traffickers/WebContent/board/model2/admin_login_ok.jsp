@@ -18,7 +18,7 @@
 	   out.println("<script type='text/javascript'>");
 	   if(to.getFlag() == 1){
 		   out.println("alert('정상적으로 로그인 되었습니다.')");
-		   out.println("location.href='concert_write.tk?aid="+aid+"&alevel="+alevel+"'");
+		   out.println("location.href='concert_list.tk'");
 	   }else{
 		   out.println("alert('패스워드를 잘못 입력하였습니다.')");
 		   out.println("history.back();");

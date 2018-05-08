@@ -62,12 +62,12 @@ public class URIController extends HttpServlet {
 			BoardAction action = null;
 			ConcertAction cAction = null;
 						
-			if(path.equals("/*.tk") || path.equals("/admin_login.tk")) {
+			if(path.equals("/*.tk") || path.equals("/admin_login.tk") || path.equals("")) {
 				action = new AdminLoginAction();
 				
 				action.execute(request, response);
 				
-				url = "/board/model2/admin_login.jsp";				
+				url = "/board/model2/admin_login.jsp";
 			}else if(path.equals("/admin_login_ok.tk")) {
 				action = new AdminLoginOkAction();
 				

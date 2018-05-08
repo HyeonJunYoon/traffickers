@@ -74,7 +74,7 @@ public class ConcertDAO {
 		   return flag;		
 	}
 		
-	public ListTO ConcertList(ListTO listTO){
+public ListTO ConcertList(ListTO listTO){
 	    
 		int cpage = listTO.getCpage();
 		int recordPerPage = listTO.getRecordPerPage();
@@ -84,26 +84,26 @@ public class ConcertDAO {
 		    conn = dataSource.getConnection();
 		    
 		    String sql = "select "
-		    		+ "c.idx, "
-		    		+ "c.ctype, "
-		    		+ "c.mem_idx, "
-		    		+ "m.id, "
-		    		+ "c.view_yn, "
-		    		+ "c.view_level, "
-		    		+ "c.subject, "
-		    		+ "c.fileName, "
-		    		+ "c.dataName, "
-		    		+ "c.ctime, "
-		    		+ "c.cDate, "		    		
-		    		+ "c.cprice, "
-		    		+ "c.cplace, "
-		    		+ "c.wdate "
-		    		+ "from tr_concert c left join tr_member m on c.mem_idx = m.idx "
-		    		+ "where c.ctype != 0 "
-		    		+ "order by c.idx desc";
-		    
+		    		+ "c.idx,"
+		    		+ "c.ctype,"
+		    		+ "c.mem_idx,"
+		    		+ "m.id,"
+		    		+ "c.view_yn,"
+		    		+ "c.view_level,"
+		    		+ "c.subject,"
+		    		+ "c.fileName,"
+		    		+ "c.dataName,"
+		    		+ "c.ctime,"
+		    		+ "c.cDate,"		    		
+		    		+ "c.cprice,"
+		    		+ "c.cplace,"
+		    		+ "c.contents,"
+		    		+ "c.curl,"
+		    		+ "c.cetc,"
+		    		+ "c.wdate"
+		    		+ " from traffickers.tr_concert c left join traffickers.tr_member m on c.mem_idx = m.idx order by c.idx desc";
+		    System.out.println(sql);
 		    pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		    System.out.println("[concertList] :" + pstmt.toString());
 		    
 		    rs = pstmt.executeQuery();
 		    
@@ -132,6 +132,9 @@ public class ConcertDAO {
 		    	cto.setCprice(rs.getString("cprice"));
 		    	cto.setCplace(rs.getString("cplace"));
 		    	cto.setWdate(rs.getString("wdate"));
+		    	cto.setCurl(rs.getString("curl"));
+		    	cto.setContents(rs.getString("contents"));
+		    	cto.setCetc(rs.getString("cetc"));
 		    	
 		    	lists.add(cto);
 		    }
