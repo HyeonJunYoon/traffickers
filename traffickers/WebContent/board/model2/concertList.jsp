@@ -109,7 +109,7 @@
 			html.append("							<td class='col-md-4' style='text-align: center; background-color: white;'>"+view_level+"</td>");
 			html.append("							</tr>");
 			html.append("						</thead>");
-			html.append("					</table>");
+			html.append("					</table>");                 
 			html.append("					<table class='table table table-bordered' style='text-align: center;'>");								
 			html.append("						<thead>");										
 			html.append("							<tr>");
