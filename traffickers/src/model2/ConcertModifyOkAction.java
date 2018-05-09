@@ -22,8 +22,8 @@ public class ConcertModifyOkAction implements ConcertAction {
 		System.out.println("ConcertModifyOkAction 확인");
 		
 		ConcertTO cto = new ConcertTO();
-		
-		String uploardpath = "/usr/local/tomcat/webapps/traffickers/upload/";
+		String uploardpath = "C:/Users/Lazna/git/traffickers/traffickers/WebContent/upload/";
+		//String uploardpath = "/usr/local/tomcat/webapps/traffickers/upload/";
 		int maxFileSize = 1024 * 1024 * 2; // 2mb 를 풀어서
 		String encoding = "utf-8";				
 		

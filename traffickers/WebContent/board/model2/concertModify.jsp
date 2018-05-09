@@ -322,15 +322,76 @@ blockquote {
 									if(ctype == 0){
 										%>
 										<option selected value="0">인디</option>
-										<option value="1">공연</option>										
+										<option value="1">발라드</option>	
+										<option value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option value="5">포크</option>
+										<option value="6">내한</option>									
 										<%
 									}else if(ctype == 1) {
 										%>
 										<option value="0">인디</option>
-										<option selected value="1">공연</option>
+										<option selected value="1">발라드</option>
+										<option value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option value="5">포크</option>
+										<option value="6">내한</option>
 										<%
-									}							
-										%>						
+									}else if(ctype == 2) {							
+										%>
+										<option value="0">인디</option>
+										<option value="1">발라드</option>
+										<option selected value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option value="5">포크</option>
+										<option value="6">내한</option>
+										<%
+									}else if(ctype == 3) {							
+										%>
+										<option value="0">인디</option>
+										<option value="1">발라드</option>
+										<option value="2">락,메탈</option>
+										<option selected value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option value="5">포크</option>
+										<option value="6">내한</option>
+										<%
+									}else if(ctype == 4) {							
+										%>
+										<option value="0">인디</option>
+										<option value="1">발라드</option>
+										<option value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option selected value="4">재즈</option>
+										<option value="5">포크</option>
+										<option value="6">내한</option>
+										<%
+									}else if(ctype == 5) {							
+										%>
+										<option value="0">인디</option>
+										<option value="1">발라드</option>
+										<option value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option selected value="5">포크</option>
+										<option value="6">내한</option>
+										<%
+									}else if(ctype == 6) {							
+										%>
+										<option value="0">인디</option>
+										<option value="1">발라드</option>
+										<option value="2">락,메탈</option>
+										<option value="3">힙합,랩</option>
+										<option value="4">재즈</option>
+										<option value="5">포크</option>
+										<option selected value="6">내한</option>
+										<%
+									}					
+										%>
+										
 									</select>
 									
 									</td>

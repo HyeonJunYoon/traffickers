@@ -7,7 +7,7 @@
 					<span style="float:right; margin-right: 8%">
 					<input type="text" id="search" class="nav-right" style="font-size: 70%;">		  					
 					<button class="btn btn-primary" style="font-size: 15px;">검색</button>
-					<button type="button" class="btn btn-primary" style="font-size: 15px;" onclick="location.href">쓰기</button>
+					<a href="concert_write.tk"><button type="button" class="btn btn-primary" style="font-size: 15px;">쓰기</button></a>
 			</span>		
 	</div>
 </div>

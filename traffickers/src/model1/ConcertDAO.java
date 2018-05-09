@@ -58,7 +58,7 @@ public class ConcertDAO {
 			pstmt.setString(13,  to.getCplace());
 			pstmt.setString(14,  to.getClink());
 			pstmt.setString(15,  to.getCurl());
-			pstmt.setString(16,  to.getCetc());		
+			pstmt.setString(16,  to.getCetc());				
 			
 			int result = pstmt.executeUpdate();
 						
