@@ -79,6 +79,7 @@ public ListTO ConcertList(ListTO listTO){
 		int cpage = listTO.getCpage();
 		int recordPerPage = listTO.getRecordPerPage();
 		int blockPerPage = listTO.getBlockPerPage();
+		String pageURL = listTO.getPageURL();
 		
 	    try{
 		    conn = dataSource.getConnection();
@@ -112,8 +113,10 @@ public ListTO ConcertList(ListTO listTO){
 		    rs.beforeFirst();
 		    
 		    listTO.setTotalPage(((listTO.getTotalRecord() -1) / recordPerPage) + 1);
+		    listTO.setPageURL(pageURL);
 		    
 		    int skip = (cpage-1) * recordPerPage;
+		    if (skip != 0) rs.absolute(skip);
 		    
 		    ArrayList<ConcertTO> lists = new ArrayList();
 		    for(int i=0; i<recordPerPage && rs.next(); i++) {
@@ -161,6 +164,7 @@ public ListTO ConcertList(ListTO listTO){
 		int cpage = listTO.getCpage();
 		int recordPerPage = listTO.getRecordPerPage();
 		int blockPerPage = listTO.getBlockPerPage();
+		String pageURL = listTO.getPageURL();
 		
 	    try{
 		    conn = dataSource.getConnection();
@@ -194,8 +198,10 @@ public ListTO ConcertList(ListTO listTO){
 		    rs.beforeFirst();
 		    		    
 		    listTO.setTotalPage(((listTO.getTotalRecord() -1) / recordPerPage) + 1);
+		    listTO.setPageURL(pageURL);
 		    
 		    int skip = (cpage-1) * recordPerPage;
+		    if (skip != 0) rs.absolute(skip);
 		    
 		    ArrayList<ConcertTO> lists = new ArrayList();
 		    for(int i=0; i<recordPerPage && rs.next(); i++) {
@@ -307,7 +313,7 @@ public ListTO ConcertList(ListTO listTO){
 		String search_value = "";
 		String sql = "select idx, subject, cPlace, cTime, fileName, dataName from tr_concert where";
 		
-		// 1 - 통합검색 / 2 - 날짜검색 / 3 - 장르검색 / 4 - 지역검색		
+		// 1 - 통합검색 / 2 - 날짜검색 / 3 - 장르검색 / 4 - 지역검색 / 5 - 공연검색		
 		if(atype == 2) {
 			String sdate = Integer.parseInt(cto.getList_Value()) < 10 ? "0"+cto.getList_Value() : cto.getList_Value();  
 			search_value = now.get(Calendar.YEAR)+"-"+sdate+"%";
@@ -318,6 +324,14 @@ public ListTO ConcertList(ListTO listTO){
 		}else if(atype == 4) {
 			search_value = cto.getList_Value()+"%";
 			sql += " cPlace like ?";
+		}else if(atype == 5) {
+			search_value = cto.getList_Value();
+			if(search_value.equals("0")) {
+				sql += " cType = ?";
+			}else if(search_value.equals("1")) {
+				search_value = "0";
+				sql += " cType != ?";
+			}	
 		}else {
 			search_value = "%"+cto.getList_Value()+"%";
 			sql += " subject like ?";

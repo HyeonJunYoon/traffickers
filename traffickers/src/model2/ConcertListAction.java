@@ -22,6 +22,9 @@ public class ConcertListAction implements ConcertAction {
 		ConcertDAO dao = new ConcertDAO();
 		ListTO listTO = new ListTO();
 		
+		String pageURL[] = request.getRequestURI().split("/");
+		listTO.setPageURL(pageURL[2]);		
+		
 		listTO.setCpage(cpage);
 		ListTO lists = dao.ConcertList(listTO);		
    		

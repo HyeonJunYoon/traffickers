@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 public class MemberDAO {
@@ -172,6 +173,8 @@ public class MemberDAO {
 		int cpage = listTO.getCpage();
 		int recordPerPage = listTO.getRecordPerPage();
 		int blockPerPage = listTO.getBlockPerPage();
+		String pageURL = listTO.getPageURL();
+		
 		
 	    try{
 		    conn = dataSource.getConnection();
@@ -188,8 +191,10 @@ public class MemberDAO {
 		    rs.beforeFirst();
 		    
 		    listTO.setTotalPage(((listTO.getTotalRecord() -1) / recordPerPage) + 1);
+		    listTO.setPageURL(pageURL);
 		    
 		    int skip = (cpage-1) * recordPerPage;
+		    if (skip != 0) rs.absolute(skip);
 		    
 		    ArrayList<MemberTO> lists = new ArrayList();
 		    for(int i=0; i<recordPerPage && rs.next(); i++) {

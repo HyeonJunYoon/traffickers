@@ -12,6 +12,7 @@
 	int recordPerPage = listTO.getTotalRecord();
 	int totalPage = listTO.getTotalPage();
 	int blockPerPage = listTO.getBlockPerPage();
+	String pageURL = listTO.getPageURL();
 	
 	StringBuffer html = new StringBuffer();
 
@@ -176,12 +177,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>공연리스트</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/traffickers.css">
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="./js/jquery-ui.js"></script>
 	
 	<script type="text/javascript">
-	
 	function btn_js_prompt_click(num){
 			title : "게시물 삭제 알림"
     	  /* prompt(문자열, 초기값) */
@@ -199,161 +200,6 @@
     	  } 	  
     }
 </script>
-	<!-- css -->
-<style type="text/css">
-.allatbox{
-	display: inline-block;
-	padding:6px 12px;
-	margin-bottom: 0;
-	font-size: 14px;
-	font-weight:normal;
-	line-height: 1.42857143;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;	
-	touch-action: manipulation;
-	cursor: pointer;
-	user-select: none;		
-	border: 1px solid transparent;
-	border-radius: 4px;	
-	
-	background-color:#403179;
-	color:white;
-	
-}
-
-
-blockquote {
-		background: white;
-		border-left: 10px solid #403179;
-		margin: auto;
-		padding: auto;
-		quotes: "\201C" "\201D" "\2018" "\2019";
-			}
-/* make sidebar nav vertical */
-@media ( min-width : 768px) {
-	.affix-content .container {
-		width: 700px;
-	}
-	html, body {		
-		background-color: #f8f8f8;
-		height: 100%;
-		/* overflow: hidden; */
-	}
-	.affix-content .container .page-header {
-		margin-top: 0;
-	}
-	.sidebar-nav {
-		position: fixed;
-		width: 100%;
-	}
-	.affix-sidebar {
-		padding-right: 0;
-		font-size: small;
-		padding-left: 0;
-		
-	}
-	.affix-row, .affix-container, .affix-content {
-		height: 100%;
-		margin-left: 0;
-		margin-right: 0;
-	}
-	.affix-content {
-		/* background-image: url("images/background_image00.jpg"); */
-		/* background-size: 90%; */	
-		 background-color: white;
-	}
-	.sidebar-nav .navbar .navbar-collapse {
-		padding: 0;
-		max-height: none;
-	}
-	.sidebar-nav .navbar {
-		border-radius: 0;
-		margin-bottom: 0;
-		border: 0;
-	}
-	.sidebar-nav .navbar ul {
-		float: none;
-		display: block;
-	}
-	.sidebar-nav .navbar li {
-		float: none;
-		display: block;
-	}
-	.sidebar-nav .navbar li a {
-		padding-top: 12px;
-		padding-bottom: 12px;
-	}
-}
-
-@media ( min-width : 769px) {
-	.affix-content .container {
-		width: 600px;
-	}
-	.affix-content .container .page-header {
-		margin-top: 0;
-	}
-	img{
-		margin:auto;
-		width: 22%;
-	}
-}
-
-@media ( min-width : 992px) {
-	.affix-content .container {
-		width: 900px;
-	}
-	.affix-content .container .page-header {
-		margin-top: 0;
-	}
-	img{
-		margin:auto;
-		width: 14%;
-	}
-}
-
-@media ( min-width : 1220px) {
-	.affix-row {
-		/* overflow: hidden; */
-	}
-	.affix-content {
-		overflow: auto;
-	}
-	.affix-content .container {
-		width: 90%;
-	}
-	.affix-content .container .page-header {
-		margin-top: 0;
-	}
-	.affix-content {
-		padding-right: 30px;
-		padding-left: 30px;
-	}
-	.affix-title {
-		border-bottom: 1px solid #ecf0f1;
-		padding-bottom: 10px;
-	}
-	.navbar-nav {
-		margin: 0;
-	}
-	.navbar-collapse {
-		padding: 0;
-	}
-	.sidebar-nav .navbar li a:hover {
-		background-color: #428bca;
-		color: white;
-	}
-	.sidebar-nav .navbar li a>.caret {
-		margin-top: 8px;
-	}
-	img{
-		margin:auto;
-		width: 14%;
-	}
-}
-</style>
-
-<!-- css end -->	
 
 </head>
 <body>
@@ -373,12 +219,13 @@ blockquote {
 
 			</div>
 			
-			<jsp:include page="<%=pageingUrl%>" flush="false">			
+			<jsp:include page="<%=pageingUrl%>" flush="false">		
 				<jsp:param name="startBlock" value="<%=startBlock%>" />
 				<jsp:param name="endBlock" value="<%=endBlock%>" />
 				<jsp:param name="totalPage" value="<%=totalPage%>" />
 				<jsp:param name="cpage" value="<%=cpage%>" />
 				<jsp:param name="blockPerPage" value="<%=blockPerPage%>" />
+				<jsp:param name="pageURL" value="<%=pageURL%>" />
 			</jsp:include>
 		</div>
 	</div>

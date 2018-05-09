@@ -10,6 +10,7 @@ public class ListTO {
 	private int totalRecord;
 	private int startBlock;
 	private int endBlock;
+	private String pageURL;
 	
 	private ArrayList<ConcertTO> concertlists;
 	private ArrayList<MemberTO> memberlists;
@@ -77,6 +78,14 @@ public class ListTO {
 
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
+	}
+
+	public String getPageURL() {
+		return pageURL;
+	}
+
+	public void setPageURL(String pageURL) {
+		this.pageURL = pageURL;
 	}
 
 	public ArrayList<ConcertTO> getConcertlists() {

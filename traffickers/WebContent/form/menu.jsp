@@ -6,7 +6,11 @@ $(document).ready(function(){
 	var pageCheck = fileName[4].split('.');
 	
 	if(pageCheck[0] == "concert_list"){
-		$("#menu01").css('background','#000').css('color','#FFF');
+		$("#menu01").css({
+			"background-color" : "#000",
+			"color" : "#FFF''
+		});
+		
 		$("#menu02").css('background','#F8F8F8').css('color','#777');
 		$("#menu03").css('background','#F8F8F8').css('color','#777');
 	}else if(pageCheck[0] == "concert_list_indie"){
@@ -28,8 +32,8 @@ $(document).ready(function(){
 								<a href="concert_list.tk"><img src="images/traffickers_icon3.jpg"; ></a>
 							</li>							
 							<li id="menu01">
-								<a href="concert_list.tk" style="color:white; font-size: 15px">
-									<span class="glyphicon glyphicon-star-empty" style="color:white;"></span>&nbsp; 공연 관리</a>
+								<a href="concert_list.tk" style="font-size: 15px">
+									<span class="glyphicon glyphicon-star-empty"></span>&nbsp; 공연 관리</a>
 							</li>
 							<li id="menu02">
 								<a href="concert_list_indie.tk" style="font-size: 15px">

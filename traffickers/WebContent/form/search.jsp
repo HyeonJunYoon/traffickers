@@ -8,6 +8,6 @@
 					<input type="text" id="search" class="nav-right" style="font-size: 70%;">		  					
 					<button class="btn btn-primary" style="font-size: 15px;">검색</button>
 					<button type="button" class="btn btn-primary" style="font-size: 15px;" onclick="location.href">쓰기</button>
-					</span>		
+			</span>		
 	</div>
 </div>

@@ -27,6 +27,9 @@ public class MemberListAction implements ConcertAction{
 		MemberDAO dao = new MemberDAO();
 		ListTO listTO = new ListTO();
 		
+		String pageURL[] = request.getRequestURI().split("/");
+		listTO.setPageURL(pageURL[2]);
+		
 		listTO.setCpage(cpage);
 		ListTO lists = dao.MemberList(listTO);		
    		

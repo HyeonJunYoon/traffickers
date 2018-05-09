@@ -12,6 +12,7 @@
 	int recordPerPage = listTO.getTotalRecord();
 	int totalPage = listTO.getTotalPage();
 	int blockPerPage = listTO.getBlockPerPage();
+	String pageURL = listTO.getPageURL();
 	
 	StringBuffer html = new StringBuffer();
 
@@ -361,6 +362,7 @@ blockquote {
 				<jsp:param name="totalPage" value="<%=totalPage%>" />
 				<jsp:param name="cpage" value="<%=cpage%>" />
 				<jsp:param name="blockPerPage" value="<%=blockPerPage%>" />
+				<jsp:param name="pageURL" value="<%=pageURL%>" />
 			</jsp:include>
 		</div>
 	</div>

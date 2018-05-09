@@ -120,7 +120,7 @@ public class URIController extends HttpServlet {
 				url = "/board/model2/concertDelete_ok.jsp";
 			}else if(path.equals("/memberList.tk")) {
 				cAction = new MemberListAction();
-				cAction.execute(request, response);
+				cAction.execute(request, response);									
 				
 				url = "/board/model2/memberList.jsp";
 			}else if(path.equals("/memberStateChange.tk")) {
